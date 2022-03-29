@@ -1,0 +1,72 @@
+.hidden {
+  height: 1px;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: -10000px;
+  width: 1px;
+}
+
+.grey {
+  background-color: rgb(224, 224, 224);
+  border: none;
+  font-size: 20px;
+  line-height: 50px;
+  padding-left: 20px;
+  border-radius: 5px 0 0 5px;
+}
+
+.logo {
+  max-width: 400px;
+  margin: 50px;
+}
+
+main {
+  margin: 0 40px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.legend {
+  font-size: 13px;
+}
+
+.search__glass {
+  background-color: rgb(224, 224, 224);
+  border: none;
+  border-radius: 0 5px 5px 0;
+  padding-right: 20px;
+  font-size: 25px;
+}
+
+.selector {
+  border: none;
+  color: white;
+  font-weight: 400;
+  padding: 20px;
+  font-size: 20px;
+  margin: 10px 20px 20px 0;
+}
+
+.selector--red {
+  background-color: #ed6454;
+}
+
+.selector--green {
+  background-color: #68d9a4;
+}
+
+.selector--blue {
+  background-color: #0d6efd;
+}
+
+.card-body {
+  background-color: #e7e7e7;
+}
+
+.w-30 {
+  max-width: 33%;
+}

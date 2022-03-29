@@ -8,18 +8,73 @@
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <title>Les petits plats</title>
   </head>
   <body>
     <header>
         <a href="index.html">
-          <img src="assets/logo/logo.png" class="logo" alt="Les petits plats Home page"/>
+          <img src="assets/logo/logo.png" class="logo mx-auto d-block" alt="Les petits plats Home page"/>
         </a>
     </header>
 
     <main id="main">
-        <section class="search" role="search">
+        <section class="search" role="search" >
+            <form class="mb-3 flex-row d-flex">
+                <label for="search" class="form-label hidden"></label>
+                <input id="search" type="text" class="form-control grey" placeholder="Rechercher une recette">
+                <button class="search__glass" type="submit"><i aria-hidden="true" class="fas fa-search"></i></button>
+            </form>
+        </section>
+
+        <section class="filter flex-row w-50 d-flex " role="filter" >
+            <label class="hidden" for="filterByIngredient" class="form-label"></label>
+            <select class="form-select selector selector--blue" id="filterByIngredient" aria-label="filterByIngredient">
+                <option selected>Ingrédients</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+            <label class="hidden" for="filterByDevice" class="form-label"></label>
+            <select class="form-select selector selector--green" id="filterByDevice" aria-label="filterByDevice">
+                <option selected>Appareils</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+            <label class="hidden" for="filterByUtensil" class="form-label"></label>
+            <select class="form-select selector selector--red" id="filterByUtensil" aria-label="filterByUtensil">
+                <option selected>Ustensiles</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </section>
+
+        <section class="results" role="results" >
+            <article class="card w-30">
+                <img src="" class="card-img-top" alt="photo presentation">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">Limonade de Coco</h5>
+                        <p class="card-text"><i class="far fa-clock" aria-hidden="true"></i><strong> 10 min</strong></p>
+                    </div>
+                    <div class="d-flex flex-row justify-content-between legend">
+                        <ul>
+                            <li><strong>lait de coco:</strong> 400ml</li>
+                            <li><strong>jus de citron:</strong> 2</li>
+                            <li><strong>lait de coco:</strong> 400ml</li>
+                            <li><strong>lait de coco:</strong> 400ml</li>
+                        </ul>
+                        <p class="card-text w-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus soluta modi voluptatem deleni</p>
+                    </div>
+
+                </div>
+
+            </article>
 
         </section>
     </main>
