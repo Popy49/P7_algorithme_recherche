@@ -20,24 +20,41 @@
     </header>
 
     <main id="main">
+        <h1 hidden>Recherche de recettes</h1>
         <section class="search" role="search" >
+            <h2 hidden>Rechercher</h2>
             <form class="mb-3 flex-row d-flex">
-                <label for="search" class="form-label hidden"></label>
+                <label for="search" class="form-label hidden">Rechercher</label>
                 <input id="search" type="text" class="form-control grey" placeholder="Rechercher une recette">
-                <button class="search__glass" type="submit"><i aria-hidden="true" class="fas fa-search"></i></button>
+                
+                <button class="search__glass" type="submit" aria-label="Bouton validation recherche"><i aria-hidden="true" class="fas fa-search"></i></button>
             </form>
         </section>
 
-        <section class="filter flex-row w-50 d-flex " role="filter" >
-            <label class="hidden" for="filterByIngredient" class="form-label"></label>
-            <select class="form-select selector selector--blue" id="filterByIngredient" aria-label="filterByIngredient">
+        <section id="tag">
+            <!-- <div class="tagName selector--blue">Coco <button class="closeButton" aria-label="Supprimer le tag"><i class="fas fa-times-circle"></i></button></div>
+            <div class="tagName selector--blue">Coco <button class="closeButton" aria-label="Supprimer le tag"><i class="fas fa-times-circle"></i></button></div> -->
+        </section>
+
+        <section class="filter flex-row d-flex ">
+            <h2 hidden>Filtrer</h2>
+            <div class="position-relative widthSelect">
+            <label for="filterByIngredient" class="form-label hidden ">Filter par ingrédient</label>
+            <input id="searchIngredient" type="text" class="selector form-select form-control selector--blue searchBy" placeholder="Rechercher un ingrédient">
+                <ul id="filterByIngredients" class="selector--blue"  aria-label="filterByIngredient">
+                    <li>one</li>
+                    <li>two</li>
+                    <li>tree</li>
+                </ul>
+            <!-- <select id="filterByIngredient" class="form-select selector selector--blue" aria-label="filterByIngredient">
                 <option selected>Ingrédients</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
-            </select>
+            </select> -->
+            </div>
 
-            <label class="hidden" for="filterByDevice" class="form-label"></label>
+            <label for="filterByDevice" class="form-label hidden">Filter par appareil</label>
             <select class="form-select selector selector--green" id="filterByDevice" aria-label="filterByDevice">
                 <option selected>Appareils</option>
                 <option value="1">One</option>
@@ -45,7 +62,7 @@
                 <option value="3">Three</option>
             </select>
 
-            <label class="hidden" for="filterByUtensil" class="form-label"></label>
+            <label for="filterByUtensil" class="form-label hidden">Filter par ustensil</label>
             <select class="form-select selector selector--red" id="filterByUtensil" aria-label="filterByUtensil">
                 <option selected>Ustensiles</option>
                 <option value="1">One</option>
@@ -54,12 +71,13 @@
             </select>
         </section>
 
-        <section class="results" role="results" >
+        <section id="results" class="results d-flex flex-wrap">
+            <h3 hidden>Résultats</h3>
             <article class="card w-30">
                 <img src="" class="card-img-top" alt="photo presentation">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <h5 class="card-title">Limonade de Coco</h5>
+                        <h4 class="card-title">Limonade de Coco</h4>
                         <p class="card-text"><i class="far fa-clock" aria-hidden="true"></i><strong> 10 min</strong></p>
                     </div>
                     <div class="d-flex flex-row justify-content-between legend">
@@ -80,11 +98,11 @@
     </main>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <!-- API -->
-    <script src="scripts/api/api.js"></script>
-    <!-- Photographer FACTORY -->
-    <script src="scripts/factories/photographer.js"></script>
-    <!-- PAGES -->
-    <script src="scripts/pages/index.js"></script>
+    <!-- Models -->
+    <script type='module' src="scripts/Model.js"></script>
+    <!-- Controller -->
+    <script type='module' src="scripts/Controller.js"></script>
+    <!-- index -->
+    <script type='module' src="scripts/index.js"></script>
   </body>
 </html>
