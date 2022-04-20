@@ -11,6 +11,40 @@ class Model {
         return recipes;
     }
 
+    //Attention mettre premiere lettre en maj
+    getAllIngredient(){
+        let ingredientsList = []
+        for (let i in recipes){
+            for (let j in recipes[i].ingredients){
+                ingredientsList.push(recipes[i].ingredients[j].ingredient.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            }
+        } ingredientsList = [...new Set(ingredientsList)]
+        ingredientsList.sort()
+        console.log(ingredientsList)
+        return ingredientsList;
+    }
+
+    //Attention a casserole
+    getAllAppliance(){
+        let applianceList = []
+        for (let i in recipes){
+                applianceList.push(recipes[i].appliance.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+        } applianceList = [...new Set(applianceList)]
+        applianceList.sort()
+        console.log(applianceList)
+        return applianceList;
+    }
+
+    getAllIngredientInArray(array){
+        let ingredientsList = []
+        for (let i in array){
+            for (let j in array[i].ingredients){
+                ingredientsList.push(array[i].ingredients[j].ingredient)
+            }
+        } ingredientsList = [...new Set(ingredientsList)]
+        return ingredientsList;
+    }
+
     
     getRecipieByName(e){
         let newRecipes = []
@@ -20,6 +54,19 @@ class Model {
             let res = unicodeData.search(unicodeEvent);
             if(res!==-1){
                 newRecipes.push(recipes[i])
+            }
+         }
+         return newRecipes
+    } 
+
+    getShortlistByList(e, array){
+        let newRecipes = []
+        let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        for (let i in array) {
+            let unicodeData = array[i].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            let res = unicodeData.search(unicodeEvent);
+            if(res!==-1){
+                newRecipes.push(array[i])
             }
          }
          return newRecipes
@@ -36,6 +83,22 @@ class Model {
                 newRecipes.push(recipes[i])
             }
          } return newRecipes
+    }
+
+    getShortRecipieList(e, array){
+        let newRecipes = [];
+        let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        for (let i in array) {
+            const data = array[i].ingredients;
+            for (let j in data) {
+                let unicodeData = data[j].ingredient.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                if(unicodeData === unicodeEvent){
+                    newRecipes.push(array[i])
+                    console.log(newRecipes)
+                }
+            }
+         }
+         return newRecipes
     }
 
     getRecipieByIngredient(e){
@@ -82,19 +145,19 @@ class Model {
          return arr
     }
 
-    getListIngredients(e){
+    getShortListIngredients(e, array){
         let arr = [];
         let newRecipes = [];
         let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        for (let i in recipes) {
-            const data = recipes[i].ingredients;
+        for (let i in array) {
+            const data = array[i].ingredients;
             for (let j in data) {
                 let ingredient = data[j].ingredient
                 let unicodeData = ingredient.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                 let res = unicodeData.search(unicodeEvent);
                 if(res!==-1){
                     // arr.push(ingredient[0].toUpperCase()+ingredient.substr(1).toLowerCase())
-                    arr.push(recipes[i].ingredients)
+                    arr.push(array[i].ingredients)
                     // arr = [...new Set(arr)]
                 }
             }
@@ -106,6 +169,56 @@ class Model {
          }
          newRecipes = [...new Set(newRecipes)]
          return newRecipes
+    }
+
+    getListIngredients(e){
+        let arr = [];
+        let newRecipes = [];
+        let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        for (let i in recipes) {
+            const data = recipes[i].ingredients;
+            for (let j in data) {
+                let ingredient = data[j].ingredient
+                let unicodeData = ingredient.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                let res = unicodeData.search(unicodeEvent);
+                if(res!==-1){
+                    arr.push(recipes[i].ingredients)
+                }
+            }
+         }
+         for (let i in arr){
+             for (let j in arr[i]){
+                newRecipes.push(arr[i][j].ingredient)
+             }
+         }
+         newRecipes = [...new Set(newRecipes)]
+         return newRecipes
+    }
+
+    //Retourne la liste des appliance suivant une nouvelle liste de recipie
+    getListApplianceByNewRecipies(newRecipes){
+        let arr = [];
+        for (let i in newRecipes) {
+            arr.push(newRecipes[i].appliance.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+        }
+        arr = [...new Set(arr)]
+        return arr
+    }
+
+    //Retourne la liste des appliance suivant un input
+    getListAppliance(e){
+        let arr = [];
+        let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        for (let i in recipes) {
+            let unicodeData = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            let res = unicodeData.search(unicodeEvent);
+                if(res!==-1){
+                    arr.push(recipes[i].appliance)
+                }
+            // arr.push(recipes[i].appliance.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+        }
+        arr = [...new Set(arr)]
+        return arr
     }
 
     // getListUtenils(newRecipes){

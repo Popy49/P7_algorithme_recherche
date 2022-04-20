@@ -1,0 +1,84 @@
+.selector {
+    border: none;
+    color: white;
+    font-weight: 400;
+    padding: 20px;
+    font-size: 20px;
+    margin: 10px 20px 20px 0;
+  
+    &--red {
+      background-color: #ed6454;
+    }
+  
+    &--green {
+      background-color: #68d9a4;
+    }
+  
+    &--blue {
+      background-color: #0d6efd;
+    }
+  }
+  
+.liste {
+    display: none;
+    font-size: 13px;
+    position: absolute;
+    top: 75px;
+    z-index: 10;
+    // flex-direction: column;
+    // flex-wrap: wrap;
+    // display: flex;
+    // height: 100vh;
+    // width: 80vw;
+    // display: inline-block;
+    column-count: 1;
+    -moz-column-count: 1;
+    -webkit-column-count:1;
+    column-gap: 0;
+  }
+  
+
+.searchBy {
+    &:hover {
+      width: 800px;
+      ~#filterByIngredients {
+        display: block;
+      }
+      ~#filterByDevice {
+        display: block;
+        position: absolute;
+        top: 390px;
+        left: 310px;
+      }
+    }
+  
+    &:focus {
+      width: 800px;
+      ~#filterByIngredients {
+        display: block;
+      }
+      ~#filterByDevice {
+        display: block;
+        position: absolute;
+        top: 390px;
+        left: 310px;
+      }
+    }
+  }
+
+  
+
+  #filterByDevice:hover{
+    display: inline-block;
+  }
+
+
+  
+  #filterByIngredients:hover{
+    display: inline-block;
+  }
+  
+  .selector__li{
+    text-align: start;
+    white-space: nowrap;
+  }

@@ -8,19 +8,70 @@ class Vue {
         // select.options.length=1
     }
 
-    tagIngredients(ingredient){
+    tagIngredients(ingredient, index, total){
+        // const listStyle = document.querySelector(".liste")
+        // const listStyle = document.getElementById("filterByIngredients")
         const select = document.getElementById("filterByIngredients");
+        //Affichage en colonne initialisation
+        if(parseInt(index)===0){
+            select.style.columnCount="1"
+        }
+        //Ajout de l'ingredient dans la liste de selection
+        
         const newOptions = document.createElement('li')
-        newOptions.innerHTML = `${ingredient}`
+        newOptions.innerHTML = `<button class="selector__li">${ingredient}</button>`
         select.appendChild(newOptions)
+        //Affichage en colonne pour grand nombre
+        if(total>50){
+            if(parseInt(index)%30===0 && parseInt(index)!==0){
+                select.style.columnCount++
+                select.style.fontSize = '13px'
+            }
+        } else {
+        //Affichage en colonne pour petit nombre
+            if(parseInt(index)%10===0 && parseInt(index)!==0){
+                select.style.columnCount++
+                select.style.fontSize = '17px'
+            }
+        }
         return select;
     }
+
+    tagAppliance(appliance, index, total){
+        const select = document.getElementById("filterByDevice");
+        //Affichage en colonne initialisation
+        if(parseInt(index)===0){
+            select.style.columnCount="1"
+        }
+        //Ajout de l'ingredient dans la liste de selection
+        
+        const newOptions = document.createElement('li')
+        newOptions.innerHTML = `<button class="selector__li">${appliance}</button>`
+        select.appendChild(newOptions)
+        //Affichage en colonne pour grand nombre
+        if(total>50){
+            if(parseInt(index)%30===0 && parseInt(index)!==0){
+                select.style.columnCount++
+                select.style.fontSize = '13px'
+            }
+        } else {
+        //Affichage en colonne pour petit nombre
+            if(parseInt(index)%10===0 && parseInt(index)!==0){
+                select.style.columnCount++
+                select.style.fontSize = '17px'
+            }
+        }
+        return select;
+    }
+
+
 
     tagDOM(e){
         var select = document.getElementById("tag");
         let tag = document.createElement("div");
         tag.className = "tagName selector--blue";
-        tag.innerHTML = `${e} <button class="closeButton" aria-label="Supprimer le tag"><i class="fas fa-times-circle"></i></button>`
+        tag.innerHTML = `<button data-label="${e}" class="closeButton" aria-label="Supprimer le tag"> ${e} <i class="fas fa-times-circle"></i></button>`
+        // `<input class="closeButton" aria-label="Supprimer le tag" type="text" value="${e}">`
         select.appendChild(tag)
     }
 
@@ -65,7 +116,6 @@ class Vue {
                                     + liste +
                                     `</ul>
                                     <p class="card-text w-50">${description}</p>
-                                    
                                 </div>
                             </div>
                             `

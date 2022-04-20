@@ -1,144 +1,69 @@
-.hidden {
-    height: 1px;
-    left: 0;
-    overflow: hidden;
-    position: absolute;
-    top: -10000px;
-    width: 1px;
-  }
-  
-  .grey {
-    background-color: rgb(224, 224, 224);
-    border: none;
-    font-size: 20px;
-    line-height: 50px;
-    padding-left: 20px;
-    border-radius: 5px 0 0 5px;
-  }
-  
-  .logo {
-    max-width: 400px;
-    margin: 50px;
-  }
-  
-  main {
-    margin: 0 40px;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .legend {
-    font-size: 13px;
-  }
-  
-  .search__glass {
-    background-color: rgb(224, 224, 224);
-    border: none;
-    border-radius: 0 5px 5px 0;
-    padding-right: 20px;
-    font-size: 25px;
-  }
-  
-  .selector {
-    border: none;
-    color: white;
-    font-weight: 400;
-    padding: 20px;
-    font-size: 20px;
-    margin: 10px 20px 20px 0;
-  }
-  
-  .selector--red {
-    background-color: #ed6454;
-  }
-  
-  .selector--green {
-    background-color: #68d9a4;
-  }
-  
-  .selector--blue {
-    background-color: #0d6efd;
-    
-  }
-  
-  .selector{
-    position: relative;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='white'  stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-  }
-  
-  .card-body {
-    background-color: #e7e7e7;
-  }
-  
-  .w-30 {
-    max-width: 33%;
-  }
-  
-  /* .searchBy{
-    /* position: absolute;
-    top:10px;
-    z-index: 10;
-    height: 70%;
-    width: 80%;
-    border: none; */
-  
-    // #filterByIngredients{
-    //     display: none;
-    //     }
+@import "base/global.scss";
+@import "components/searchBar.scss";
+@import "components/selector.scss";
 
-  .searchBy{
-    &:hover{
-     ~ #filterByIngredients{
-        display: block;
-    }}
-    &:focus{
-        ~ #filterByIngredients{
-           display: block;
-       }}
-  }
 
-.searchBy:hover ~ .selector--blue
-{
-    display: block;
+
+.logo {
+  max-width: 400px;
+  margin: 50px;
 }
 
-// div.enfant
-// {
-//  display: none;
-// }
 
-// div.parent:hover .enfant{
-// 	display:block;
-// }
-  
-  .widthSelect{
-    width: 90%;
-  }
-  
-  .fa-times-circle{
-    font-weight: 100;
-    font-size: 18px;
-  }
-  
-  .closeButton{
-    color: white;
-    background-color: transparent;
-    border: none;
-    
-  }
-  
-  .tagName{
-    color: white;
-    font-size: 14px;
-    margin: 5px;
-    padding: 5px 15px;
-    border-radius: 5px;
-  }
-  
-  #tag{
-    display: flex;
-    flex-wrap: wrap;
-  }
+
+
+.legend {
+  font-size: 13px;
+}
+
+
+
+.widthSelect:hover {}
+
+
+
+.selector {
+  position: relative;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='white'  stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.card-body {
+  background-color: #e7e7e7;
+}
+
+.w-30 {
+  max-width: 33%;
+}
+
+
+
+
+
+.widthSelect {
+  width: 90%;
+}
+
+.fa-times-circle {
+  font-weight: 100;
+  font-size: 18px;
+}
+
+.closeButton {
+  color: white;
+  background-color: transparent;
+  border: none;
+
+}
+
+.tagName {
+  color: white;
+  font-size: 14px;
+  margin: 5px;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+#tag {
+  display: flex;
+  flex-wrap: wrap;
+}

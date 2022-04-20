@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+.hidden {
+    height: 1px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: -10000px;
+    width: 1px;
+}
+
+main {
+margin: 0 40px;
+}
+
+ul {
+list-style: none;
+padding: 0;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    color: white;
+  }
+  

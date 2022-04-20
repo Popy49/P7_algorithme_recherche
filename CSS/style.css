@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .hidden {
   height: 1px;
   left: 0;
@@ -5,20 +9,6 @@
   position: absolute;
   top: -10000px;
   width: 1px;
-}
-
-.grey {
-  background-color: #e0e0e0;
-  border: none;
-  font-size: 20px;
-  line-height: 50px;
-  padding-left: 20px;
-  border-radius: 5px 0 0 5px;
-}
-
-.logo {
-  max-width: 400px;
-  margin: 50px;
 }
 
 main {
@@ -30,10 +20,20 @@ ul {
   padding: 0;
 }
 
-.legend {
-  font-size: 13px;
+button {
+  background-color: transparent;
+  border: none;
+  color: white;
 }
 
+.search {
+  background-color: #e0e0e0;
+  border: none;
+  font-size: 20px;
+  line-height: 50px;
+  padding-left: 20px;
+  border-radius: 5px;
+}
 .search__glass {
   background-color: #e0e0e0;
   border: none;
@@ -50,17 +50,73 @@ ul {
   font-size: 20px;
   margin: 10px 20px 20px 0;
 }
-
 .selector--red {
   background-color: #ed6454;
 }
-
 .selector--green {
   background-color: #68d9a4;
 }
-
 .selector--blue {
   background-color: #0d6efd;
+}
+
+.liste {
+  display: none;
+  font-size: 13px;
+  position: absolute;
+  top: 75px;
+  z-index: 10;
+  column-count: 1;
+  -moz-column-count: 1;
+  -webkit-column-count: 1;
+  column-gap: 0;
+}
+
+.searchBy:hover {
+  width: 800px;
+}
+.searchBy:hover ~ #filterByIngredients {
+  display: block;
+}
+.searchBy:hover ~ #filterByDevice {
+  display: block;
+  position: absolute;
+  top: 390px;
+  left: 310px;
+}
+.searchBy:focus {
+  width: 800px;
+}
+.searchBy:focus ~ #filterByIngredients {
+  display: block;
+}
+.searchBy:focus ~ #filterByDevice {
+  display: block;
+  position: absolute;
+  top: 390px;
+  left: 310px;
+}
+
+#filterByDevice:hover {
+  display: inline-block;
+}
+
+#filterByIngredients:hover {
+  display: inline-block;
+}
+
+.selector__li {
+  text-align: start;
+  white-space: nowrap;
+}
+
+.logo {
+  max-width: 400px;
+  margin: 50px;
+}
+
+.legend {
+  font-size: 13px;
 }
 
 .selector {
@@ -74,24 +130,6 @@ ul {
 
 .w-30 {
   max-width: 33%;
-}
-
-/* .searchBy{
-  /* position: absolute;
-  top:10px;
-  z-index: 10;
-  height: 70%;
-  width: 80%;
-  border: none; */
-.searchBy:hover ~ #filterByIngredients {
-  display: block;
-}
-.searchBy:focus ~ #filterByIngredients {
-  display: block;
-}
-
-.searchBy:hover ~ .selector--blue {
-  display: block;
 }
 
 .widthSelect {
