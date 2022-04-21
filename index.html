@@ -57,6 +57,7 @@
             </select> -->
             </div>
 
+            <div class="position-relative widthSelect">
             <label for="filterByDevice" class="form-label hidden">Filter par appareil</label>
             <input id="searchDevice" type="text"
                     class="selector form-select form-control selector--green searchBy"
@@ -65,14 +66,23 @@
                 </ul>
             </div>
 
+            <div class="position-relative widthSelect">
+            <label for="filterByUtensil" class="form-label hidden">Filter par appareil</label>
+            <input id="searchUstensil" type="text"
+                    class="selector form-select form-control selector--red searchBy"
+                    placeholder="Rechercher un appareil">
+                <ul id="filterByUtensil" class="liste selector--red" aria-label="filterByUtensil">
+                </ul>
+            </div>
 
-            <label for="filterByUtensil" class="form-label hidden">Filter par ustensil</label>
+
+            <!-- <label for="filterByUtensil" class="form-label hidden">Filter par ustensil</label>
             <select class="form-select selector selector--red" id="filterByUtensil" aria-label="filterByUtensil">
                 <option selected>Ustensiles</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
-            </select>
+            </select> -->
         </section>
 
         <section id="results" class="results d-flex flex-wrap">

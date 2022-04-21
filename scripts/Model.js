@@ -20,7 +20,7 @@ class Model {
             }
         } ingredientsList = [...new Set(ingredientsList)]
         ingredientsList.sort()
-        console.log(ingredientsList)
+        console.log(recipes)
         return ingredientsList;
     }
 
@@ -31,8 +31,18 @@ class Model {
                 applianceList.push(recipes[i].appliance.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
         } applianceList = [...new Set(applianceList)]
         applianceList.sort()
-        console.log(applianceList)
         return applianceList;
+    }
+
+    getAllUstensils(){
+        let ustensilsList = []
+        for (let i in recipes){
+            for (let j in recipes[i].ustensils)
+                ustensilsList.push(recipes[i].ustensils[j].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+        } ustensilsList = [...new Set(ustensilsList)]
+        ustensilsList.sort()
+        console.log(ustensilsList)
+        return ustensilsList;
     }
 
     getAllIngredientInArray(array){
@@ -94,7 +104,6 @@ class Model {
                 let unicodeData = data[j].ingredient.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                 if(unicodeData === unicodeEvent){
                     newRecipes.push(array[i])
-                    console.log(newRecipes)
                 }
             }
          }
@@ -126,19 +135,22 @@ class Model {
         return newRecipes
     }
 
+    //Ne marche pas avec les accents circonflexe type creme fraiche
     getListIngredient(e){
         let arr = [];
-        let newRecipes = [];
         let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        console.log(unicodeEvent)
         for (let i in recipes) {
             const data = recipes[i].ingredients;
             for (let i in data) {
                 let ingredient = data[i].ingredient
                 let unicodeData = ingredient.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                console.log(unicodeData)
                 let res = unicodeData.search(unicodeEvent);
                 if(res!==-1){
                     arr.push(ingredient[0].toUpperCase()+ingredient.substr(1).toLowerCase())
                     arr = [...new Set(arr)]
+                    arr.sort()
                 }
             }
          }
@@ -171,6 +183,8 @@ class Model {
          return newRecipes
     }
 
+    
+
     getListIngredients(e){
         let arr = [];
         let newRecipes = [];
@@ -195,6 +209,18 @@ class Model {
          return newRecipes
     }
 
+    //Retourne la liste des ingredients suivant une nouvelle liste de recipie
+    getListIngredientByNewRecipies(newRecipes){
+        let arr = [];
+        for (let i in newRecipes) {
+            for (let ingredient of newRecipes[i].ingredients){
+                arr.push(ingredient.ingredient.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            }
+        }
+        arr = [...new Set(arr)]
+        return arr
+    }
+
     //Retourne la liste des appliance suivant une nouvelle liste de recipie
     getListApplianceByNewRecipies(newRecipes){
         let arr = [];
@@ -205,94 +231,78 @@ class Model {
         return arr
     }
 
-    //Retourne la liste des appliance suivant un input
-    getListAppliance(e){
+    //Retourne la liste des ustensil suivant une nouvelle liste de recipie
+    getListUstensilByNewRecipies(newRecipes){
         let arr = [];
-        let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        for (let i in recipes) {
-            let unicodeData = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            let res = unicodeData.search(unicodeEvent);
-                if(res!==-1){
-                    arr.push(recipes[i].appliance)
-                }
-            // arr.push(recipes[i].appliance.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+        for (let i in newRecipes) {
+            for (let ustensil of newRecipes[i].ustensils){
+                arr.push(ustensil.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            }
         }
         arr = [...new Set(arr)]
         return arr
     }
 
-    // getListUtenils(newRecipes){
-    //     let arr = [];
-    //     for (let i in newRecipes) {
-    //         const data = newRecipes[i].ingredients;
-    //         const e ="co";
-    //         let sum ="";
-    //         for (let i in data) {
-    //             let res = data[i].ingredient.search(e);
-    //             if(res!==-1){
-    //                 arr.push(data[i].ingredient)
-    //             }
-    //         }
-    //      }console.log(arr)
-    //      console.log(this.newRecipes)
-    // }
+    //Retourne la liste des appliance suivant un input
+    getListAppliance(e){
+        let arr = [];
+        let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        for (let i in recipes) {
+            let unicodeData = recipes[i].appliance.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            let res = unicodeData.search(unicodeEvent);
+                if(res!==-1){
+                    arr.push(recipes[i].appliance)
+                    console.log(recipes[i].appliance)
+                }
+        }
+        arr = [...new Set(arr)]
+        return arr
+    }
 
-    // getRecipieByDescription(recipes){
-    //     for (let i in recipes) {
-    //         const data = recipes[i].description;
-    //         const e ="cit";
-    //         let res = data.search(e);
-    //         if(res!==-1){
-    //             this.newRecipes.push(recipes[i])
-    //             this.newRecipes = [...new Set(this.newRecipes)]
-    //         }
-    //      }
-        
-    // }
+    //Retourne la liste des ustensils suivant un input
+    getListUstensil(e){
+        let arr = [];
+        let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        for (let i in recipes) {
+            for (const ustensil of recipes[i].ustensils){
+                let unicodeData = ustensil.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                let res = unicodeData.search(unicodeEvent);
+                if(res!==-1){
+                    arr.push(ustensil.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+                }
+            } 
+        }
+        arr = [...new Set(arr)]
+        return arr
+    }
 
+    //Retourne une les recipe suivant un input et un nouveau tableau de recipe A FAIRE
+    getSomeApplianceByNewRecipies(e, array){
+        let newRecipes = [];
+        let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        for (let i in array) {
+            let unicodeData = array[i].appliance.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if(unicodeData === unicodeEvent){
+                newRecipes.push(array[i])
+            } 
+         }
+         return newRecipes
+    }
 
-    // searchListIngredient(recipes){
-    //     let arr = [];
-    //     for (let i in recipes) {
-    //         const data = recipes[i].name;
-    //         const e ="citron";
-    //         console.log(e[0]);
-    //         let sum ="";
-            
-    //         for (let i in data){
-    //             sum += data[i];
-    //             if(sum.length === e.length){
-    //                 if(sum === e){
-    //                     arr.push(data);
-    //                 }
-    //                 sum = sum.substring(1);
-    //             } 
-    //         } 
-    //         }console.log(arr);
-    // }
-
-    // searchListIngredient2(recipes, e){
-    //     let arr = [];
-    //     for (let i in recipes) {
-    //         const data = recipes[i].name;
-    //         const e ="cit";
-    //         let sum ="";
-    //         for (let i in data){
-    //             if(data[i] === e[0]){
-    //                 sum = data.substr(i, e.length)
-    //                 if(sum === e){
-    //                     arr.push(data);
-    //                 }
-    //             } 
-    //         } 
-    //      }
-    // }
-
-
-    
-
-
-
+    //Retourne une les recipe suivant un input et un nouveau tableau de recipe
+    getSomeUstensilByNewRecipies(e, array){
+        let newRecipes = [];
+        let unicodeEvent = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        for (let i in array) {
+            for (const ustensil of array[i].ustensils){
+                let unicodeData = ustensil.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if(unicodeData === unicodeEvent){
+                    newRecipes.push(array[i])
+                } 
+            }
+         }
+         return newRecipes
+    }
 
 }
 

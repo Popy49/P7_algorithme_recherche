@@ -72,32 +72,32 @@ button {
   column-gap: 0;
 }
 
-.searchBy:hover {
-  width: 800px;
+#searchIngredient:hover {
+  width: 500px;
 }
-.searchBy:hover ~ #filterByIngredients {
+#searchIngredient:hover ~ #filterByIngredients {
   display: block;
 }
-.searchBy:hover ~ #filterByDevice {
-  display: block;
-  position: absolute;
-  top: 390px;
-  left: 310px;
+
+#searchDevice:hover {
+  width: 500px;
 }
-.searchBy:focus {
-  width: 800px;
-}
-.searchBy:focus ~ #filterByIngredients {
+#searchDevice:hover ~ #filterByDevice {
   display: block;
 }
-.searchBy:focus ~ #filterByDevice {
+
+#searchUstensil:hover {
+  width: 500px;
+}
+#searchUstensil:hover ~ #filterByUtensil {
   display: block;
-  position: absolute;
-  top: 390px;
-  left: 310px;
 }
 
 #filterByDevice:hover {
+  display: inline-block;
+}
+
+#filterByUtensil:hover {
   display: inline-block;
 }
 

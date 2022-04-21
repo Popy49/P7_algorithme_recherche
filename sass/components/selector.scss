@@ -38,40 +38,89 @@
   }
   
 
-.searchBy {
-    &:hover {
-      width: 800px;
-      ~#filterByIngredients {
-        display: block;
-      }
-      ~#filterByDevice {
-        display: block;
-        position: absolute;
-        top: 390px;
-        left: 310px;
-      }
-    }
+// .searchBy {
+//     &:hover {
+//       width: 800px;
+//       ~#filterByIngredients {
+//         display: block;
+//       }
+//       ~#filterByDevice {
+//         display: block;
+//         position: absolute;
+//         top: 390px;
+//         left: 310px;
+//       }
+//       ~#filterByUtensil {
+//         display: block;
+//         position: absolute;
+//         top: 390px;
+//         left: 310px;
+//       }
+//     }
   
-    &:focus {
-      width: 800px;
-      ~#filterByIngredients {
-        display: block;
-      }
-      ~#filterByDevice {
-        display: block;
-        position: absolute;
-        top: 390px;
-        left: 310px;
-      }
-    }
-  }
+//     &:focus {
+//       width: 800px;
+//       ~#filterByIngredients {
+//         display: block;
+//       }
+//       ~#filterByDevice {
+//         display: block;
+//         position: absolute;
+//         top: 390px;
+//         left: 310px;
+//       }
+//       ~#filterByUtensil {
+//         display: block;
+//         position: absolute;
+//         top: 390px;
+//         left: 310px;
+//       }
+//     }
+//   }
 
-  
+  //A SUPPRIMER
+  // #filterByUtensil{
+  //   display: block;
+  //   top: 500px;
+  //   left: 500px;
+  // }
+
+  // #filterByDevice {
+  //   display: block;
+  //   top: 500px;
+  // }
+
+  #searchIngredient{
+    &:hover {
+      width: 500px;
+      ~#filterByIngredients {
+        display: block;
+      }
+  }}
+
+  #searchDevice{
+    &:hover {
+      width: 500px;
+      ~#filterByDevice {
+        display: block;
+      }
+  }}
+
+  #searchUstensil{
+    &:hover {
+      width: 500px;
+      ~#filterByUtensil {
+        display: block;
+      }
+  }}
 
   #filterByDevice:hover{
     display: inline-block;
   }
 
+  #filterByUtensil:hover{
+    display: inline-block;
+  }
 
   
   #filterByIngredients:hover{
