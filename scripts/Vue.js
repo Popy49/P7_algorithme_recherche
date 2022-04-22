@@ -67,8 +67,6 @@ class Vue {
     tagUstensils(ustensil, index, total){
         const select = document.getElementById("filterByUtensil");
         //Affichage en colonne initialisation
-        console.log(index)
-        console.log(total)
         if(parseInt(index)===0){
             select.style.columnCount="1"
         }
@@ -127,27 +125,30 @@ class Vue {
         let ingredientsDom = ""
         let liste = ''
         for (let i in ingredients){
+            
             let unity = ingredients[i].unit ? ingredients[i].unit : ''
+            unity === "grammes" ? unity="g" : unity
             let quantity = ingredients[i].quantity ? ': '+ingredients[i].quantity : ''
             liste += `<li><strong>${ingredients[i].ingredient}</strong> ${quantity} ${unity}</li>`
         }
         const select = document.querySelector('.results');
         let newCard = document.createElement("article")
         newCard.className = "card w-30"
-        newCard.innerHTML = `
-                            <img src="" class="card-img-top" alt="photo presentation">
-                            <div class="card-body">
+        newCard.innerHTML = `<a href='#' class="card-body">
+                            <img src="assets/images/hamburger.jpg" class="card-img-top" alt="photo presentation">
+                            <div class="card-body card-body-text">
                                 <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">${name}</h4>
-                                    <p class="card-text"><i class="far fa-clock" aria-hidden="true"></i><strong> ${time} min</strong></p>
+                                    <h4 class="card-title w-70">${name}</h4>
+                                    <p class="card-text text-nowrap"><i class="far fa-clock" aria-hidden="true"></i><strong> ${time} min</strong></p>
                                 </div>
                                 <div class="d-flex flex-row justify-content-between legend">
                                 <ul>`
                                     + liste +
                                     `</ul>
-                                    <p class="card-text w-50">${description}</p>
+                                    <p class="card-text resume w-50">${description}</p>
                                 </div>
                             </div>
+                            </a>
                             `
         select.appendChild(newCard)
     }

@@ -16,9 +16,9 @@ class Controller {
         this.searchinputIngredient()
         this.searchinputAppliance()
         this.searchinputUstensil()
-        this.hoverinputIngredient()
-        this.hoverinputAppliance()
-        this.hoverinputUstensil()
+        this.focusIngredientWidth()
+        this.focusUstensilWidth()
+        this.focusApplianceWidth()
     }
 
     init() {
@@ -48,8 +48,8 @@ class Controller {
         }
     }
 
+    //User search input in general search bar
     searchInput() {
-        //ATTENTION MARCHE PAS SI ON ENLEVE ET QUIL Y A DES TAGS
         const searchBar = document.getElementById('search')
         searchBar.addEventListener('input', (e) => {
             //3 cars in general input    
@@ -75,169 +75,149 @@ class Controller {
             }
             //User clean the input
             if (e.target.value.length === 0) {
-                //Si tags = 0
-                if(this.tagAppliance.length !== 0){
-
+                this.recipeList = this.model.getAllRecipes()
+                //No tag
+                if(this.tagAppliance.length === 0 && this.tag.length === 0 && this.tagUstensil.length === 0){
+                    this.init()
                 }
-                this.init()
-
+                //Tag
+                if(this.tagAppliance.length !== 0){
+                    for (let i in this.tagAppliance){
+                        this.recipeList = this.model.getSomeApplianceByNewRecipies(this.tagAppliance[i], this.recipeList)
+                    }
+                    this.vue.clearDom('.results')
+                    for (let i in this.recipeList) {
+                        this.vue.RecipiesList((this.recipeList[i]))
+                    }
+                }
+                
+                if (this.tagUstensil.length !== 0) {
+                    for (let i in this.tagUstensil){
+                        this.recipeList = this.model.getSomeUstensilByNewRecipies(this.tagUstensil[i], this.recipeList)
+                    }
+                    this.vue.clearDom('.results')
+                    for (let i in this.recipeList) {
+                        this.vue.RecipiesList((this.recipeList[i]))
+                    }
+                }
+                if (this.tag.length !== 0) {
+                    for (let i in this.tag){
+                        this.recipeList = this.model.getSomeIngredientByNewRecipies(this.tag[i], this.recipeList)
+                    }
+                    this.vue.clearDom('.results')
+                    for (let i in this.recipeList) {
+                        this.vue.RecipiesList((this.recipeList[i]))
+                    }
+                }
+                
             }
         });
     }
 
-    //2eme tag ne marche pas cherche dans toutes le recipes
+    //User search input in ingredient search bar
     searchinputIngredient() {
         const searchBar = document.getElementById('searchIngredient')
         searchBar.addEventListener('input', (e) => {
-            if (this.ingredientList.length === 0) {
-                let newRecipes = this.model.getListIngredient(e.target.value)
-                this.vue.clearDom('#filterByIngredients')
-                for (let i in newRecipes) {
-                    this.vue.tagIngredients(newRecipes[i], i, newRecipes.length)
-                }
-            } else {
-                this.vue.clearDom('#filterByIngredients')
-                //il faut recommparer les chaines de caractere e target value avec l'ingredient liste
-                const newList = this.model.getShortlistByList(e.target.value, this.ingredientList)
-                for (let i in newList) {
-                    this.vue.tagIngredients(newList[i], i, newList.length)
-                }
-            }
-        }
-        )
-    }
-
-    searchinputAppliance() {
-        const searchBar = document.getElementById('searchDevice')
-        searchBar.addEventListener('input', (e) => {
-            if (this.applianceList.length === 0) {
-                let newRecipes = this.model.getListAppliance(e.target.value)
-                this.vue.clearDom('#filterByDevice')
-                for (let i in newRecipes) {
-                    this.vue.tagAppliance(newRecipes[i], i, newRecipes.length)
-                }
-            } else {
-                this.vue.clearDom('#filterByDevice')
-                //il faut recommparer les chaines de caractere e target value avec l'ingredient liste
-                const newList = this.model.getShortlistByList(e.target.value, this.applianceList)
-                for (let i in newList) {
-                    this.vue.tagAppliance(newList[i], i, newList.length)
-                }
+            let newRecipes = []
+            this.ingredientList.length === 0 ? newRecipes = this.model.getListIngredient(e.target.value) : newRecipes = this.model.getShortlistByList(e.target.value, this.ingredientList);
+            this.vue.clearDom('#filterByIngredients')
+            for (let i in newRecipes) {
+                this.vue.tagIngredients(newRecipes[i], i, newRecipes.length)
             }
         })
     }
 
+    //User search input in appliance search bar
+    searchinputAppliance() {
+        const searchBar = document.getElementById('searchDevice')
+        searchBar.addEventListener('input', (e) => {
+            let newRecipes = []
+            this.applianceList.length === 0 ? newRecipes = this.model.getListAppliance(e.target.value) : newRecipes = this.model.getShortlistByList(e.target.value, this.applianceList);
+            this.vue.clearDom('#filterByDevice')
+            for (let i in newRecipes) {
+                this.vue.tagAppliance(newRecipes[i], i, newRecipes.length)
+            }
+        })
+    }
+
+    //User search input in ustensil search bar
     searchinputUstensil() {
         const searchBar = document.getElementById('searchUstensil')
         searchBar.addEventListener('input', (e) => {
             if (this.ustensilList.length === 0) {
-                
-                let newRecipes = this.model.getListUstensil(e.target.value)
-                console.log(newRecipes)
-                this.vue.clearDom('#filterByUtensil')
-                for (let i in newRecipes) {
-                    this.vue.tagUstensils(newRecipes[i], i, newRecipes.length)
-                }
-            } else {
-                this.vue.clearDom('#filterByUtensil')
-                //il faut recommparer les chaines de caractere e target value avec l'ingredient liste
-                const newList = this.model.getShortlistByList(e.target.value, this.ustensilList)
-                for (let i in newList) {
-                    console.log(newList)
-                    this.vue.tagUstensils(newList[i], i, newList.length)
-                }
-            }
+            let newRecipes = []
+            this.ustensilList.length === 0 ? newRecipes = this.model.getListUstensil(e.target.value) : newRecipes = this.model.getShortlistByList(e.target.value, this.ustensilList);
+            this.vue.clearDom('#filterByUtensil')
+            for (let i in newRecipes) {
+                this.vue.tagUstensils(newRecipes[i], i, newRecipes.length)
+            }}
         })
     }
 
     //Affichage de la barre suivant le nombre de resultat
-    hoverinputIngredient() {
+    focusIngredientWidth(){
         const searchBar = document.getElementById('searchIngredient')
-        const selectBar = document.querySelector('.searchBy')
         const selectList = document.getElementById('filterByIngredients')
-        searchBar.addEventListener('mouseenter', (e) => {
+        searchBar.addEventListener('focus', (e) => {
             let width = selectList.offsetWidth;
-            let Actualwidth = searchBar.offsetWidth;
-            if(Actualwidth < width){
-                searchBar.style.width = width + 'px'
-            } else {
-                selectList.style.width = Actualwidth + 'px'
-            }
+            searchBar.style.width = width + 'px'
         })
-        selectList.addEventListener('mouseenter', (e) => {
-            let width = selectList.offsetWidth;
-            let Actualwidth = searchBar.offsetWidth;
-            if(Actualwidth < width){
-                searchBar.style.width = width + 'px'
-            } else {
-                selectList.style.width = Actualwidth + 'px'
-            }
-        })
-        searchBar.addEventListener('mouseleave', (e) => {
-            searchBar.style.width = '90%'
-        })
-        selectList.addEventListener('mouseleave', (e) => {
-            searchBar.style.width = '90%'
+        searchBar.addEventListener('blur', (e) => {
+            searchBar.style.width = '200px'
         })
     }
-
-    hoverinputAppliance() {
-        const searchBar = document.getElementById('searchDevice')
-        const selectList = document.getElementById('filterByDevice')
-        searchBar.addEventListener('mouseenter', (e) => {
-            let width = selectList.offsetWidth;
-            let Actualwidth = searchBar.offsetWidth;
-            if(Actualwidth < width){
-                searchBar.style.width = width + 'px'
-            } else {
-                selectList.style.width = Actualwidth + 'px'
-            }
-        })
-        selectList.addEventListener('mouseenter', (e) => {
-            let width = selectList.offsetWidth;
-            let Actualwidth = searchBar.offsetWidth;
-            if(Actualwidth < width){
-                searchBar.style.width = width + 'px'
-            } else {
-                selectList.style.width = Actualwidth + 'px'
-            }
-        })
-        searchBar.addEventListener('mouseleave', (e) => {
-            searchBar.style.width = '90%'
-        })
-        selectList.addEventListener('mouseleave', (e) => {
-            searchBar.style.width = '90%'
-        })
-    }
-
-    hoverinputUstensil() {
+    focusUstensilWidth(){
         const searchBar = document.getElementById('searchUstensil')
         const selectList = document.getElementById('filterByUtensil')
-        searchBar.addEventListener('mouseenter', (e) => {
+        searchBar.addEventListener('focus', (e) => {
             let width = selectList.offsetWidth;
-            let Actualwidth = searchBar.offsetWidth;
-            if(Actualwidth < width){
-                searchBar.style.width = width + 'px'
-            } else {
-                selectList.style.width = Actualwidth + 'px'
-            }
+            console.log(width)
+            searchBar.style.width = width + 'px'
         })
-        selectList.addEventListener('mouseenter', (e) => {
-            let width = selectList.offsetWidth;
-            let Actualwidth = searchBar.offsetWidth;
-            if(Actualwidth < width){
-                searchBar.style.width = width + 'px'
-            } else {
-                selectList.style.width = Actualwidth + 'px'
-            }
-        })
-        searchBar.addEventListener('mouseleave', (e) => {
-            searchBar.style.width = '90%'
-        })
-        selectList.addEventListener('mouseleave', (e) => {
-            searchBar.style.width = '90%'
+        searchBar.addEventListener('blur', (e) => {
+            searchBar.style.width = '200px'
         })
     }
+    focusApplianceWidth(){
+        const searchBar = document.getElementById('searchDevice')
+        const selectList = document.getElementById('filterByDevice')
+        searchBar.addEventListener('focus', (e) => {
+            let width = selectList.offsetWidth;
+            searchBar.style.width = width + 'px'
+        })
+        searchBar.addEventListener('blur', (e) => {
+            searchBar.style.width = '200px'
+        })
+    }
+
+    // hoverinputUstensil() {
+    //     const searchBar = document.getElementById('searchUstensil')
+    //     const selectList = document.getElementById('filterByUtensil')
+    //     searchBar.addEventListener('mouseenter', (e) => {
+    //         let width = selectList.offsetWidth;
+    //         let Actualwidth = searchBar.offsetWidth;
+    //         if(Actualwidth < width){
+    //             searchBar.style.width = width + 'px'
+    //         } else {
+    //             selectList.style.width = Actualwidth + 'px'
+    //         }
+    //     })
+    //     selectList.addEventListener('mouseenter', (e) => {
+    //         let width = selectList.offsetWidth;
+    //         let Actualwidth = searchBar.offsetWidth;
+    //         if(Actualwidth < width){
+    //             searchBar.style.width = width + 'px'
+    //         } else {
+    //             selectList.style.width = Actualwidth + 'px'
+    //         }
+    //     })
+    //     searchBar.addEventListener('mouseleave', (e) => {
+    //         searchBar.style.width = '90%'
+    //     })
+    //     selectList.addEventListener('mouseleave', (e) => {
+    //         searchBar.style.width = '90%'
+    //     })
+    // }
 
     ingredientListInput(newRecipes) {
         let nameList = this.model.getListIngredientByNewRecipies(newRecipes)
@@ -280,13 +260,7 @@ class Controller {
         }
         this.vue.clearDom('#filterByIngredients')
         for (let i in nameList) {
-
             this.vue.tagIngredients(nameList[i], i, nameList.length)
-            // if ((i-col)===20){
-            //     const select = document.getElementById("filterByIngredients");
-            //     select.style.color="red"
-            //     console.log
-            // }
         }
     }
 
@@ -312,55 +286,52 @@ class Controller {
         this.vue.clearDom('#filterByUtensil')
         for (let i in ustensils) {
             this.vue.tagUstensils(ustensils[i], i, ustensils.length)
-            // if ((i-col)===20){
-            //     const select = document.getElementById("filterByIngredients");
-            //     select.style.color="red"
-            //     console.log
-            // }
         }
     }
 
 
+    //User select an ingredient
     ingredientbutton() {
         const filter = document.getElementById('filterByIngredients')
         filter.addEventListener("click", e => {
             if (e.target && e.target.matches("button")) {
-                //on enregistre la selection
+                //Save ingredient
                 this.tag.push(e.target.innerHTML)
-                //on efface la barre de recherche
+                //clear input
                 document.getElementById('searchIngredient').value = ''
-                //on positionne le tag
+                //Put ingredient tag in DOM
                 this.vue.tagDOM(e.target.innerHTML, "blue")
-                //on récupère la liste des recipes correspondante au tag dans les recipes restantes
-                let ingredientList = this.model.getShortRecipieList(e.target.innerHTML, this.recipeList)
+                //Reload recipes list with the new tag
+                let ingredientList = this.model.getSomeIngredientByNewRecipies(e.target.innerHTML, this.recipeList)
                 this.recipeList = ingredientList
                 this.vue.clearDom('.results')
                 for (let i in ingredientList) {
                     this.vue.RecipiesList((ingredientList[i]))
                 }
             }
-            //On ajoute lévènement fermer au tag
+            //Add close function to the tag
             this.deleteTagButton()
-            //On met à jour la liste de selection ATTENTION PAS INNER HTML
+            //Update ingredient list
             this.ingredientListInputShort(e.target.innerHTML, this.recipeList)
-            // On met à jour la liste des machines
+            //Update appliance list
             this.applianceListInput(this.recipeList)
-            //List of ustensil update
+            //Update ustensil list
             this.ustensilListInput(this.recipeList)
         });
     }
 
+    //User select an appliance
     applianceButton() {
         const filter = document.getElementById('filterByDevice')
         filter.addEventListener("click", e => {
             if (e.target && e.target.matches("button")) {
-                //on enregistre la selection
+                //Save appliance
                 this.tagAppliance.push(e.target.innerHTML)
-                //on efface la barre de recherche
+                //clear input
                 document.getElementById('searchDevice').value = ''
-                //on positionne le tag
+                //Put ingredient tag in DOM
                 this.vue.tagDOM(e.target.innerHTML, "green")
-                //on récupère la liste des recipes correspondante au tag dans les recipes restantes changer pour appliance
+                //Reload recipes list with the new tag
                 let applianceList = this.model.getSomeApplianceByNewRecipies(e.target.innerHTML, this.recipeList)
                 this.recipeList = applianceList
                 this.vue.clearDom('.results')
@@ -449,8 +420,8 @@ class Controller {
                 if (this.tag.length !== 0) {
                     let ingredientList = []
                     for (const tag of this.tag) {
-                        ingredientList = this.model.getShortRecipieList(tag, this.recipeList)
-                        this.recipeList = this.model.getShortRecipieList(tag, this.recipeList)
+                        ingredientList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
+                        this.recipeList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
                     }
                     this.recipeList = [...new Set(ingredientList)]
                 }
@@ -478,7 +449,7 @@ class Controller {
 
 
                 //On edite la barre de selection ingredient
-                let nameList = this.model.getAllIngredientInArray(this.recipeList)
+                let nameList = this.model.getListIngredientByNewRecipies(this.recipeList)
                 //On edite la barre de selection appliance
                 let applianceList = this.model.getListApplianceByNewRecipies(this.recipeList)
                 //On edite la barre de selection appliance
