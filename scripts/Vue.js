@@ -2,23 +2,16 @@ import {Model} from './Model.js';
 
 class Vue {
     constructor(){
-        // const dom = document.getElementById('tag');
-        // dom.innerHTML=``;
-        const select = document.getElementById("filterByIngredient");
-        // select.options.length=1
     }
 
     tagIngredients(ingredient, index, total){
         ingredient = ingredient.charAt(0).toUpperCase() + ingredient.slice(1)
-        // const listStyle = document.querySelector(".liste")
-        // const listStyle = document.getElementById("filterByIngredients")
         const select = document.getElementById("filterByIngredients");
         //Affichage en colonne initialisation
         if(parseInt(index)===0){
             select.style.columnCount="1"
         }
         //Ajout de l'ingredient dans la liste de selection
-        
         const newOptions = document.createElement('li')
         newOptions.innerHTML = `<button class="selector__li">${ingredient}</button>`
         select.appendChild(newOptions)
@@ -46,7 +39,6 @@ class Vue {
             select.style.columnCount="1"
         }
         //Ajout de l'ingredient dans la liste de selection
-        
         const newOptions = document.createElement('li')
         newOptions.innerHTML = `<button class="selector__li">${appliance}</button>`
         select.appendChild(newOptions)
@@ -74,7 +66,6 @@ class Vue {
             select.style.columnCount="1"
         }
         //Ajout de l'ingredient dans la liste de selection
-        
         const newOptions = document.createElement('li')
         newOptions.innerHTML = `<button class="selector__li">${ustensil}</button>`
         select.appendChild(newOptions)
@@ -95,14 +86,11 @@ class Vue {
     }
 
 
-
-
     tagDOM(e, color){
         var select = document.getElementById("tag");
         let tag = document.createElement("div");
         tag.className = `tagName selector--${color}`;
         tag.innerHTML = `<button data-label="${e}" class="closeButton" aria-label="Supprimer le tag"> ${e} <i class="fas fa-times-circle"></i></button>`
-        // `<input class="closeButton" aria-label="Supprimer le tag" type="text" value="${e}">`
         select.appendChild(tag)
     }
 

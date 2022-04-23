@@ -33,9 +33,8 @@ class Controller {
         let nameList = this.model.getAllIngredient()
         let appliances = this.model.getAllAppliance()
         let ustensils = this.model.getAllUstensils()
-        for (const recipe of recipes) {
-            this.vue.RecipiesList(recipe)
-        }
+        recipes.map(recipe => this.vue.RecipiesList(recipe))
+        // recipes.map( recipe => this.vue.tagIngredients(recipe, i, nameList.length))
         for (let i in nameList) {
             this.vue.tagIngredients(nameList[i], i, nameList.length)
             
@@ -48,7 +47,7 @@ class Controller {
         }
     }
 
-    //User search input in general search bar
+    //User search input in general search bar //Attention si tag et qu'on recherche, NE MARCHE PAS
     searchInput() {
         const searchBar = document.getElementById('search')
         searchBar.addEventListener('input', (e) => {
@@ -57,7 +56,6 @@ class Controller {
                 //Recipes update
                 let newRecipes = this.model.getRecipies(e.target.value)
                 this.recipeList = this.model.getRecipies(e.target.value)
-                console.log(this.recipeList)
                 if (newRecipes.length === 0) {
                     return this.vue.noRecipe()
                 } else {
@@ -76,6 +74,7 @@ class Controller {
             }
             //User clean the input
             if (e.target.value.length === 0) {
+                this.vue.clearDom('.results')
                 this.recipeList = this.model.getAllRecipes()
                 //No tag
                 if(this.tagAppliance.length === 0 && this.tag.length === 0 && this.tagUstensil.length === 0){
@@ -83,9 +82,12 @@ class Controller {
                 }
                 //Tag
                 if(this.tagAppliance.length !== 0){
-                    for (let i in this.tagAppliance){
-                        this.recipeList = this.model.getSomeApplianceByNewRecipies(this.tagAppliance[i], this.recipeList)
-                    }
+                    this.tagAppliance.forEach( tag => {
+                        this.recipeList = this.model.getSomeApplianceByNewRecipies(tag, this.recipeList)
+                    })
+                    // for (let i in this.tagAppliance){
+                    //     this.recipeList = this.model.getSomeApplianceByNewRecipies(this.tagAppliance[i], this.recipeList)
+                    // }
                     this.vue.clearDom('.results')
                     for (let i in this.recipeList) {
                         this.vue.RecipiesList((this.recipeList[i]))
@@ -120,7 +122,6 @@ class Controller {
         const searchBar = document.getElementById('searchIngredient')
         searchBar.addEventListener('input', (e) => {
             let newRecipes = []
-            console.log(this.ingredientList)
             this.ingredientList.length === 0 ? newRecipes = this.model.getListIngredient(e.target.value) : newRecipes = this.model.getShortlistByList(e.target.value, this.ingredientList);
             this.vue.clearDom('#filterByIngredients')
             for (let i in newRecipes) {
@@ -279,11 +280,9 @@ class Controller {
         let recipe = this.model.getSomeUstensilByNewRecipies(e, newRecipes)
         let ustensils = this.model.getListUstensilByNewRecipies(recipe)
         this.ustensilList = ustensils
-        console.log(ustensils)
         //on supprime les tags deja present
         if (this.tagUstensil.length !== 0) {
             for (const tag of this.tagUstensil) {
-                console.log(this.tagUstensil)
                 let myIndex = ustensils.indexOf(tag.toLowerCase());
                 if (myIndex !== -1) {
                     ustensils.splice(myIndex, 1);
@@ -312,9 +311,7 @@ class Controller {
                 let ingredientList = this.model.getSomeIngredientByNewRecipies(e.target.innerHTML, this.recipeList)
                 this.recipeList = ingredientList
                 this.vue.clearDom('.results')
-                for (let i in ingredientList) {
-                    this.vue.RecipiesList((ingredientList[i]))
-                }
+                ingredientList.map( ingredient => this.vue.RecipiesList(ingredient))
             }
             //Add close function to the tag
             this.deleteTagButton()
@@ -342,9 +339,7 @@ class Controller {
                 let applianceList = this.model.getSomeApplianceByNewRecipies(e.target.innerHTML, this.recipeList)
                 this.recipeList = applianceList
                 this.vue.clearDom('.results')
-                for (let i in applianceList) {
-                    this.vue.RecipiesList((applianceList[i]))
-                }
+                applianceList.map( appliance => this.vue.RecipiesList(appliance))
             }
             // On ajoute lévènement fermer au tag
             this.deleteTagButton()
@@ -373,9 +368,7 @@ class Controller {
                 let ustensilList = this.model.getSomeUstensilByNewRecipies(e.target.innerHTML, this.recipeList)
                 this.recipeList = ustensilList
                 this.vue.clearDom('.results')
-                for (let i in ustensilList) {
-                    this.vue.RecipiesList((ustensilList[i]))
-                }
+                ustensilList.map( ustensil => this.vue.RecipiesList(ustensil))
             }
             // On ajoute lévènement fermer au tag
             this.deleteTagButton()
@@ -393,23 +386,12 @@ class Controller {
     deleteTagButton() {
         const tags = document.querySelectorAll(".closeButton")
         //ne marche pas pour 2 tags, il faut renvoyer par a la searchbar mais a autre chose
-        for (const tag of tags) {
+        tags.forEach( tag => {
             tag.addEventListener('click', e => {
-                //delete tag from the array ingredient
-                const ingredientTag = this.tag.indexOf(e.target.dataset.label);
-                if (ingredientTag !== -1) {
-                    this.tag.splice(ingredientTag , 1);
-                }
-                //delete tag from the array appliance
-                const applianceTag = this.tagAppliance.indexOf(e.target.dataset.label);
-                if (applianceTag !== -1) {
-                    this.tagAppliance.splice(applianceTag, 1);
-                }
-                //delete tag from the array ustensil
-                 const ustensilTag = this.tagUstensil.indexOf(e.target.dataset.label);
-                 if (ustensilTag !== -1) {
-                     this.tagUstensil.splice(ustensilTag, 1);
-                 }
+                //delete tag from the array
+                this.tag = this.tag.filter(item => e.target.dataset.label!==item)
+                this.tagAppliance= this.tagAppliance.filter(item => e.target.dataset.label!==item)
+                this.tagUstensil = this.tagUstensil.filter(item => e.target.dataset.label!==item)
 
                 tag.parentElement.remove();
 
@@ -426,6 +408,11 @@ class Controller {
                 //liste select pas bonne
                 if (this.tag.length !== 0) {
                     let ingredientList = []
+                    // this.tag.forEach( tag => {
+                    //     ingredientList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
+                    //     this.recipeList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
+                    // })
+                    // this.recipeList = [...new Set(ingredientList)]
                     for (const tag of this.tag) {
                         ingredientList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
                         this.recipeList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
@@ -520,7 +507,136 @@ class Controller {
                 }
                 this.searchInput()
             })
-        }
+
+        })
+        // for (const tag of tags) {
+        //     tag.addEventListener('click', e => {
+        //         //delete tag from the array ingredient
+        //         const ingredientTag = this.tag.indexOf(e.target.dataset.label);
+        //         if (ingredientTag !== -1) {
+        //             this.tag.splice(ingredientTag , 1);
+        //         }
+        //         //delete tag from the array appliance
+        //         const applianceTag = this.tagAppliance.indexOf(e.target.dataset.label);
+        //         if (applianceTag !== -1) {
+        //             this.tagAppliance.splice(applianceTag, 1);
+        //         }
+        //         //delete tag from the array ustensil
+        //          const ustensilTag = this.tagUstensil.indexOf(e.target.dataset.label);
+        //          if (ustensilTag !== -1) {
+        //              this.tagUstensil.splice(ustensilTag, 1);
+        //          }
+
+        //         tag.parentElement.remove();
+
+        //         //On cherche les recipes à partir de la barre de recherche
+        //         const searchBar = document.getElementById('search').value;
+        //         if (searchBar.length > 2) {
+        //             //Recipes update
+        //             this.recipeList = this.model.getRecipies(searchBar)
+        //         } else {
+        //             this.recipeList = this.model.getAllRecipes()
+        //         }
+
+        //         //on récupère la liste des recipes correspondante au tag ingredient dans les recipes restantes
+        //         //liste select pas bonne
+        //         if (this.tag.length !== 0) {
+        //             let ingredientList = []
+        //             for (const tag of this.tag) {
+        //                 ingredientList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
+        //                 this.recipeList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
+        //             }
+        //             this.recipeList = [...new Set(ingredientList)]
+        //         }
+
+        //         //on récupère la liste des recipes correspondante au tag appliance dans les recipes restantes
+        //         if (this.tagAppliance.length !== 0) {
+        //             let applianceList = []
+        //             for (const tag of this.tagAppliance) {
+        //                 applianceList = this.model.getSomeApplianceByNewRecipies(tag, this.recipeList)
+        //                 this.recipeList = this.model.getSomeApplianceByNewRecipies(tag, this.recipeList)
+        //             }
+        //             this.recipeList = [...new Set(applianceList)]
+        //         }
+
+        //         //on récupère la liste des recipes correspondante au tag ustensil dans les recipes restantes
+        //         //ATTENTION NE MARCHE PASSSS
+        //         if (this.tagUstensil.length !== 0) {
+        //             let ustensilList = []
+        //             for (const tag of this.tagUstensil) {
+        //                 ustensilList = this.model.getSomeUstensilByNewRecipies(tag, this.recipeList)
+        //                 this.recipeList = this.model.getSomeUstensilByNewRecipies(tag, this.recipeList)
+        //             }
+        //             this.recipeList = [...new Set(ustensilList)]
+        //         }
+
+
+        //         //On edite la barre de selection ingredient
+        //         let nameList = this.model.getListIngredientByNewRecipies(this.recipeList)
+        //         //On edite la barre de selection appliance
+        //         let applianceList = this.model.getListApplianceByNewRecipies(this.recipeList)
+        //         //On edite la barre de selection appliance
+        //         let ustensilList = this.model.getListUstensilByNewRecipies(this.recipeList)
+                
+        //         // METTRE A JOUR LE SELECT
+        //         //on supprime les tags deja present il faut la liste d'ingredient pas recipie
+        //         let selectIngredients = nameList
+        //         if (this.tag.length !== 0) {
+        //             for (const tag of this.tag) {
+        //                 let myIndex = selectIngredients.indexOf(tag);
+        //                 if (myIndex !== -1) {
+        //                     selectIngredients.splice(myIndex, 1);
+        //                 }
+        //             }
+        //         }
+        //         this.vue.clearDom('#filterByIngredients')
+        //         for (let i in selectIngredients) {
+        //             this.vue.tagIngredients(selectIngredients[i], i, selectIngredients.length)
+        //         }
+
+        //         //on supprime les tags deja present il faut la liste d'appliance pas recipie
+        //         let selectAppliances = applianceList
+        //         if (this.tagAppliance.length !== 0) {
+        //             for (const tag of this.tagAppliance) {
+        //                 let myIndex = selectAppliances.indexOf(tag);
+        //                 if (myIndex !== -1) {
+        //                     selectAppliances.splice(myIndex, 1);
+        //                 }
+        //             }
+        //         }
+        //         this.vue.clearDom('#filterByDevice')
+        //         for (let i in selectAppliances) {
+        //             this.vue.tagAppliance(selectAppliances[i], i, selectAppliances.length)
+        //         }
+
+        //         //on supprime les tags deja present il faut la liste d'ustensil pas recipie
+        //         let selectUstensil = ustensilList
+        //         if (this.tagUstensil.length !== 0) {
+        //             for (const tag of this.tagUstensil) {
+        //                 let myIndex = selectUstensil.indexOf(tag);
+        //                 if (myIndex !== -1) {
+        //                     selectUstensil.splice(myIndex, 1);
+        //                 }
+        //             }
+        //         }
+        //         this.vue.clearDom('#filterByUtensil')
+        //         for (let i in selectUstensil) {
+        //             this.vue.tagUstensils(selectUstensil[i], i, selectUstensil.length)
+        //         }
+
+
+        //         //On edite le DOM
+        //         if (this.recipeList.length === 0) {
+        //             return this.vue.noRecipe()
+        //         } else {
+        //             this.vue.clearDom('.results')
+        //             for (let i in this.recipeList) {
+        //                 this.vue.RecipiesList((this.recipeList[i]))
+        //             }
+        //         }
+        //         this.searchInput()
+        //     })
+        // }
     }
     }
 
