@@ -9,6 +9,7 @@ class Vue {
     }
 
     tagIngredients(ingredient, index, total){
+        ingredient = ingredient.charAt(0).toUpperCase() + ingredient.slice(1)
         // const listStyle = document.querySelector(".liste")
         // const listStyle = document.getElementById("filterByIngredients")
         const select = document.getElementById("filterByIngredients");
@@ -39,6 +40,7 @@ class Vue {
 
     tagAppliance(appliance, index, total){
         const select = document.getElementById("filterByDevice");
+        appliance = appliance.charAt(0).toUpperCase() + appliance.slice(1)
         //Affichage en colonne initialisation
         if(parseInt(index)===0){
             select.style.columnCount="1"
@@ -66,6 +68,7 @@ class Vue {
 
     tagUstensils(ustensil, index, total){
         const select = document.getElementById("filterByUtensil");
+        ustensil = ustensil.charAt(0).toUpperCase() + ustensil.slice(1)
         //Affichage en colonne initialisation
         if(parseInt(index)===0){
             select.style.columnCount="1"
@@ -125,7 +128,6 @@ class Vue {
         let ingredientsDom = ""
         let liste = ''
         for (let i in ingredients){
-            
             let unity = ingredients[i].unit ? ingredients[i].unit : ''
             unity === "grammes" ? unity="g" : unity
             let quantity = ingredients[i].quantity ? ': '+ingredients[i].quantity : ''

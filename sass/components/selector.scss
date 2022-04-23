@@ -28,71 +28,12 @@
     position: absolute;
     top: 75px;
     z-index: 10;
-    // flex-direction: column;
-    // flex-wrap: wrap;
-    // display: flex;
-    // height: 100vh;
-    // width: 80vw;
-    // display: inline-block;
     column-count: 1;
     -moz-column-count: 1;
     -webkit-column-count:1;
     column-gap: 0;
   }
   
-
-// .searchBy {
-//     &:hover {
-//       width: 800px;
-//       ~#filterByIngredients {
-//         display: block;
-//       }
-//       ~#filterByDevice {
-//         display: block;
-//         position: absolute;
-//         top: 390px;
-//         left: 310px;
-//       }
-//       ~#filterByUtensil {
-//         display: block;
-//         position: absolute;
-//         top: 390px;
-//         left: 310px;
-//       }
-//     }
-  
-//     &:focus {
-//       width: 800px;
-//       ~#filterByIngredients {
-//         display: block;
-//       }
-//       ~#filterByDevice {
-//         display: block;
-//         position: absolute;
-//         top: 390px;
-//         left: 310px;
-//       }
-//       ~#filterByUtensil {
-//         display: block;
-//         position: absolute;
-//         top: 390px;
-//         left: 310px;
-//       }
-//     }
-//   }
-
-  //A SUPPRIMER
-  // #filterByUtensil{
-  //   display: block;
-  //   top: 500px;
-  //   left: 500px;
-  // }
-
-  // #filterByDevice {
-  //   display: block;
-  //   top: 500px;
-  // }
-
   #searchIngredient{
     &:focus {
       width: 500px;

@@ -57,6 +57,7 @@ class Controller {
                 //Recipes update
                 let newRecipes = this.model.getRecipies(e.target.value)
                 this.recipeList = this.model.getRecipies(e.target.value)
+                console.log(this.recipeList)
                 if (newRecipes.length === 0) {
                     return this.vue.noRecipe()
                 } else {
@@ -119,6 +120,7 @@ class Controller {
         const searchBar = document.getElementById('searchIngredient')
         searchBar.addEventListener('input', (e) => {
             let newRecipes = []
+            console.log(this.ingredientList)
             this.ingredientList.length === 0 ? newRecipes = this.model.getListIngredient(e.target.value) : newRecipes = this.model.getShortlistByList(e.target.value, this.ingredientList);
             this.vue.clearDom('#filterByIngredients')
             for (let i in newRecipes) {
@@ -222,6 +224,7 @@ class Controller {
     ingredientListInput(newRecipes) {
         let nameList = this.model.getListIngredientByNewRecipies(newRecipes)
         this.ingredientList = nameList
+        console.log(this.ingredientList)
         this.vue.clearDom('#filterByIngredients')
         for (let i in nameList) {
             this.vue.tagIngredients(nameList[i], i, nameList.length)
@@ -246,21 +249,24 @@ class Controller {
         }
     }
 
-    ingredientListInputShort(e, array) {
+    ingredientListInputShort(e, newRecipes) {
         //on recupere la liste d'ingredient
-        let nameList = this.model.getShortListIngredients(e, array)
+        let recipe = this.model.getSomeIngredientByNewRecipies(e, newRecipes)
+        let ingredients = this.model.getListIngredientByNewRecipies(recipe)
+        console.log(ingredients)
+        this.ingredientList = ingredients
         //on supprime les tags deja present
         if (this.tag.length !== 0) {
             for (const tag of this.tag) {
-                let myIndex = nameList.indexOf(tag);
+                let myIndex = ingredients.indexOf(tag.toLowerCase());
                 if (myIndex !== -1) {
-                    nameList.splice(myIndex, 1);
+                    ingredients.splice(myIndex, 1);
                 }
             }
         }
         this.vue.clearDom('#filterByIngredients')
-        for (let i in nameList) {
-            this.vue.tagIngredients(nameList[i], i, nameList.length)
+        for (let i in ingredients) {
+            this.vue.tagIngredients(ingredients[i], i, ingredients.length)
         }
     }
 
@@ -272,12 +278,13 @@ class Controller {
         //on recupere la liste d'ingredient
         let recipe = this.model.getSomeUstensilByNewRecipies(e, newRecipes)
         let ustensils = this.model.getListUstensilByNewRecipies(recipe)
+        this.ustensilList = ustensils
         console.log(ustensils)
         //on supprime les tags deja present
         if (this.tagUstensil.length !== 0) {
             for (const tag of this.tagUstensil) {
                 console.log(this.tagUstensil)
-                let myIndex = ustensils.indexOf(tag);
+                let myIndex = ustensils.indexOf(tag.toLowerCase());
                 if (myIndex !== -1) {
                     ustensils.splice(myIndex, 1);
                 }
