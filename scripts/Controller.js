@@ -222,6 +222,15 @@ class Controller {
     ingredientListInput(newRecipes) {
         let nameList = this.model.getListIngredientByNewRecipies(newRecipes)
         this.ingredientList = nameList
+        //on supprime les tags deja present
+        if (this.tag.length !== 0) {
+            for (const tag of this.tag) {
+                let myIndex = nameList.indexOf(tag);
+                if (myIndex !== -1) {
+                    nameList.splice(myIndex, 1);
+                }
+            }
+        }
         this.vue.clearDom('#filterByIngredients')
         for (let i in nameList) {
             this.vue.tagIngredients(nameList[i], i, nameList.length)
@@ -240,6 +249,14 @@ class Controller {
     ustensilListInput(newRecipes) {
         let nameList = this.model.getListUstensilByNewRecipies(newRecipes)
         this.ustensilList = nameList
+        if (this.tagUstensil.length !== 0) {
+            for (const tag of this.tagUstensil) {
+                let myIndex = ustensils.indexOf(tag);
+                if (myIndex !== -1) {
+                    ustensils.splice(myIndex, 1);
+                }
+            }
+        }
         this.vue.clearDom('#filterByUtensil')
         for (let i in nameList) {
             this.vue.tagUstensils(nameList[i], i, nameList.length)
