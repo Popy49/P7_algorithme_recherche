@@ -60,9 +60,7 @@ class Controller {
                     return this.vue.noRecipe()
                 } else {
                     this.vue.clearDom('.results')
-                    for (let i in newRecipes) {
-                        this.vue.RecipiesList((newRecipes[i]))
-                    }
+                    newRecipes.map( recipe => this.vue.RecipiesList(recipe))
                 }
                 //Liste of select update
                 this.ingredientListInput(newRecipes)
@@ -85,32 +83,24 @@ class Controller {
                     this.tagAppliance.forEach( tag => {
                         this.recipeList = this.model.getSomeApplianceByNewRecipies(tag, this.recipeList)
                     })
-                    // for (let i in this.tagAppliance){
-                    //     this.recipeList = this.model.getSomeApplianceByNewRecipies(this.tagAppliance[i], this.recipeList)
-                    // }
                     this.vue.clearDom('.results')
-                    for (let i in this.recipeList) {
-                        this.vue.RecipiesList((this.recipeList[i]))
-                    }
+                    this.recipeList.map( recipe => this.vue.RecipiesList(recipe))
                 }
                 
                 if (this.tagUstensil.length !== 0) {
-                    for (let i in this.tagUstensil){
-                        this.recipeList = this.model.getSomeUstensilByNewRecipies(this.tagUstensil[i], this.recipeList)
-                    }
+                    ///arrete ici
+                    this.tagUstensil.forEach( tag => {
+                        this.recipeList = this.model.getSomeUstensilByNewRecipies(tag, this.recipeList)
+                    })
                     this.vue.clearDom('.results')
-                    for (let i in this.recipeList) {
-                        this.vue.RecipiesList((this.recipeList[i]))
-                    }
+                    this.recipeList.map( recipe => this.vue.RecipiesList(recipe))
                 }
                 if (this.tag.length !== 0) {
-                    for (let i in this.tag){
-                        this.recipeList = this.model.getSomeIngredientByNewRecipies(this.tag[i], this.recipeList)
-                    }
+                    this.tag.forEach( tag => {
+                        this.recipeList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
+                    })
                     this.vue.clearDom('.results')
-                    for (let i in this.recipeList) {
-                        this.vue.RecipiesList((this.recipeList[i]))
-                    }
+                    this.recipeList.map( recipe => this.vue.RecipiesList(recipe))
                 }
                 
             }
@@ -254,17 +244,12 @@ class Controller {
         //on recupere la liste d'ingredient
         let recipe = this.model.getSomeIngredientByNewRecipies(e, newRecipes)
         let ingredients = this.model.getListIngredientByNewRecipies(recipe)
-        console.log(ingredients)
         this.ingredientList = ingredients
         //on supprime les tags deja present
         if (this.tag.length !== 0) {
-            for (const tag of this.tag) {
-                let myIndex = ingredients.indexOf(tag.toLowerCase());
-                if (myIndex !== -1) {
-                    ingredients.splice(myIndex, 1);
-                }
-            }
-        }
+            this.tag.forEach( tag => {
+                ingredients = ingredients.filter(item => tag.toLowerCase()!==item.toLowerCase())
+            })}
         this.vue.clearDom('#filterByIngredients')
         for (let i in ingredients) {
             this.vue.tagIngredients(ingredients[i], i, ingredients.length)
@@ -281,13 +266,11 @@ class Controller {
         let ustensils = this.model.getListUstensilByNewRecipies(recipe)
         this.ustensilList = ustensils
         //on supprime les tags deja present
+
         if (this.tagUstensil.length !== 0) {
-            for (const tag of this.tagUstensil) {
-                let myIndex = ustensils.indexOf(tag.toLowerCase());
-                if (myIndex !== -1) {
-                    ustensils.splice(myIndex, 1);
-                }
-            }
+            this.tagUstensil.forEach( tag => {
+                    ustensils = ustensils.filter(item => tag.toLowerCase()!==item.toLowerCase())
+                })
         }
         this.vue.clearDom('#filterByUtensil')
         for (let i in ustensils) {
@@ -405,39 +388,32 @@ class Controller {
                 }
 
                 //on récupère la liste des recipes correspondante au tag ingredient dans les recipes restantes
-                //liste select pas bonne
                 if (this.tag.length !== 0) {
                     let ingredientList = []
-                    // this.tag.forEach( tag => {
-                    //     ingredientList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
-                    //     this.recipeList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
-                    // })
-                    // this.recipeList = [...new Set(ingredientList)]
-                    for (const tag of this.tag) {
+                    this.tag.forEach( tag => {
                         ingredientList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
                         this.recipeList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
-                    }
+                    })
                     this.recipeList = [...new Set(ingredientList)]
                 }
 
                 //on récupère la liste des recipes correspondante au tag appliance dans les recipes restantes
                 if (this.tagAppliance.length !== 0) {
                     let applianceList = []
-                    for (const tag of this.tagAppliance) {
+                    this.tagAppliance.forEach( tag => {
                         applianceList = this.model.getSomeApplianceByNewRecipies(tag, this.recipeList)
                         this.recipeList = this.model.getSomeApplianceByNewRecipies(tag, this.recipeList)
-                    }
+                    })
                     this.recipeList = [...new Set(applianceList)]
                 }
 
                 //on récupère la liste des recipes correspondante au tag ustensil dans les recipes restantes
-                //ATTENTION NE MARCHE PASSSS
                 if (this.tagUstensil.length !== 0) {
                     let ustensilList = []
-                    for (const tag of this.tagUstensil) {
+                    this.tagUstensil.forEach( tag => {
                         ustensilList = this.model.getSomeUstensilByNewRecipies(tag, this.recipeList)
                         this.recipeList = this.model.getSomeUstensilByNewRecipies(tag, this.recipeList)
-                    }
+                    })
                     this.recipeList = [...new Set(ustensilList)]
                 }
 
@@ -453,12 +429,15 @@ class Controller {
                 //on supprime les tags deja present il faut la liste d'ingredient pas recipie
                 let selectIngredients = nameList
                 if (this.tag.length !== 0) {
-                    for (const tag of this.tag) {
-                        let myIndex = selectIngredients.indexOf(tag);
-                        if (myIndex !== -1) {
-                            selectIngredients.splice(myIndex, 1);
-                        }
-                    }
+                    this.tag.forEach( tag => {
+                        selectIngredients = selectIngredients.filter(item => tag.toLowerCase()!==item.toLowerCase())
+                    })
+                    // for (const tag of this.tag) {
+                    //     let myIndex = selectIngredients.indexOf(tag.toLowerCase());
+                    //     if (myIndex !== -1) {
+                    //         selectIngredients.splice(myIndex, 1);
+                    //     }
+                    // }
                 }
                 this.vue.clearDom('#filterByIngredients')
                 for (let i in selectIngredients) {
@@ -484,7 +463,7 @@ class Controller {
                 let selectUstensil = ustensilList
                 if (this.tagUstensil.length !== 0) {
                     for (const tag of this.tagUstensil) {
-                        let myIndex = selectUstensil.indexOf(tag);
+                        let myIndex = selectUstensil.indexOf(tag.toLowerCase());
                         if (myIndex !== -1) {
                             selectUstensil.splice(myIndex, 1);
                         }
