@@ -47,6 +47,12 @@ class Model {
         return ustensilsList
     }
 
+
+    
+    /**
+        @param {string} input
+        @returns {object} recipe
+    */
     getRecipies(e){
         const newRecipe = []
         recipes.forEach( (recipe) => {
@@ -60,6 +66,29 @@ class Model {
             return newRecipe;
     }
 
+    /**
+        @param {string} input 
+        @param {array} recipe
+        @returns {object} recipe
+    */
+    getShortRecipies(e, array){
+        const newRecipe = []
+        array.forEach( (recipe) => {
+            let description = recipe.description.includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            let name = recipe.name.includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            let ingredient = recipe.ingredients.forEach( (ingredient) => {
+                ingredient.ingredient.includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            });
+            description || name || ingredient ? newRecipe.push(recipe) : newRecipe;
+        })
+            return newRecipe;
+    }
+
+    /**
+        @param {string} input 
+        @param {array}
+        @returns {array} 
+    */
     getShortlistByList(e, array){
         let newRecipes = []
         array.forEach( (item) => {
@@ -70,7 +99,11 @@ class Model {
          return newRecipes
     } 
 
-    //Retourne la liste des ingredients suivant une nouvelle liste de recipie
+
+    /**
+        @param {object} recipe
+        @returns {array} ingredient
+    */
     getListIngredientByNewRecipies(newRecipes){
         let arr = [];
         newRecipes.forEach( recipe => {
@@ -83,7 +116,10 @@ class Model {
         return arr
     }
 
-    //Retourne la liste des appliance suivant une nouvelle liste de recipie
+    /**
+        @param {object} recipe
+        @returns {array} appliance
+    */
     getListApplianceByNewRecipies(newRecipes){
         let appliance = newRecipes.map( recipe => recipe.appliance.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
         appliance = [...new Set(appliance)]
@@ -91,7 +127,10 @@ class Model {
         return appliance
     }
 
-    //Retourne la liste des ustensil suivant une nouvelle liste de recipie
+    /**
+        @param {object} recipe
+        @returns {array} ustensil
+    */
     getListUstensilByNewRecipies(newRecipes){
         let arr = [];
         newRecipes.forEach( recipe => {
@@ -104,7 +143,10 @@ class Model {
         return arr
     }
 
-    //Ne marche pas avec les accents circonflexe type creme fraiche
+    /**
+        @param {string} input
+        @returns {array} ingredient
+    */
     getListIngredient(e){
         let arr = [];
         let input = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -119,7 +161,10 @@ class Model {
         return arr
     }
 
-    //Retourne la liste des appliance suivant un input
+    /**
+        @param {string} input
+        @returns {array} appliance
+    */
     getListAppliance(e){
         let arr = [];
         let input = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -132,7 +177,10 @@ class Model {
         return arr
     }
 
-    //Retourne la liste des ustensils suivant un input
+    /**
+        @param {string} input
+        @returns {array} ustensil
+    */
     getListUstensil(e){
         let arr = [];
         let input = e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -147,7 +195,11 @@ class Model {
         return arr
     }
 
-    //Retourne une les recipe suivant un input et un nouveau tableau de recipe
+    /**
+        @param {string} input
+        @param {object} recipe
+        @returns {object} recipe
+    */
     getSomeIngredientByNewRecipies(input, array){
         let newRecipes = []
         array.forEach( (item) => {
@@ -160,7 +212,11 @@ class Model {
          return newRecipes
     }
 
-    //Retourne une les recipe suivant un input et un nouveau tableau de recipe
+    /**
+        @param {string} input
+        @param {object} recipe
+        @returns {object} recipe
+    */
     getSomeApplianceByNewRecipies(input, array){
         let newRecipes = [];
         array.forEach( item => {
@@ -171,7 +227,11 @@ class Model {
          return newRecipes
     }
 
-    //Retourne une les recipe suivant un input et un nouveau tableau de recipe // ATTENTION NE SUPPRIME PAS CELUI CLIQUE
+    /**
+        @param {string} input
+        @param {object} recipe
+        @returns {object} recipe
+    */
     getSomeUstensilByNewRecipies(input, array){
         let newRecipes = []
         array.forEach( (item) => {

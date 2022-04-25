@@ -33,18 +33,15 @@ class Controller {
         let nameList = this.model.getAllIngredient()
         let appliances = this.model.getAllAppliance()
         let ustensils = this.model.getAllUstensils()
+
+        //Display Recipes
         recipes.map(recipe => this.vue.RecipiesList(recipe))
-        // recipes.map( recipe => this.vue.tagIngredients(recipe, i, nameList.length))
-        for (let i in nameList) {
-            this.vue.tagIngredients(nameList[i], i, nameList.length)
-            
-        }
-        for (let i in appliances){
-            this.vue.tagAppliance(appliances[i], i, appliances.length)
-        }
-        for (let i in ustensils){
-            this.vue.tagUstensils(ustensils[i], i, ustensils.length)
-        }
+        //Display select lists
+        nameList.map( (item, index) => this.vue.tagIngredients(item, index, nameList.length))
+        appliances.map( (item, index) => this.vue.tagAppliance(item, index, appliances.length))
+        ustensils.map( (item, index) => this.vue.tagUstensils(item, index, ustensils.length))
+
+
     }
 
     //User search input in general search bar //Attention si tag et qu'on recherche, NE MARCHE PAS
@@ -53,21 +50,21 @@ class Controller {
         searchBar.addEventListener('input', (e) => {
             //3 cars in general input    
             if (e.target.value.length > 2) {
+                //Check if there is tag
+                this.recipeList.length === 0 ? this.recipeList = this.model.getRecipies(e.target.value) : this.recipeList = this.model.getShortRecipies(e.target.value, this.recipeList);
                 //Recipes update
-                let newRecipes = this.model.getRecipies(e.target.value)
-                this.recipeList = this.model.getRecipies(e.target.value)
-                if (newRecipes.length === 0) {
+                if (this.recipeList.length === 0) {
                     return this.vue.noRecipe()
                 } else {
                     this.vue.clearDom('.results')
-                    newRecipes.map( recipe => this.vue.RecipiesList(recipe))
+                    this.recipeList.map( recipe => this.vue.RecipiesList(recipe))
                 }
-                //Liste of select update
-                this.ingredientListInput(newRecipes)
+                //List of select update
+                this.ingredientListInput(this.recipeList)
                 //List of appliance update
-                this.applianceListInput(newRecipes)
+                this.applianceListInput(this.recipeList)
                 //List of ustensil update
-                this.ustensilListInput(newRecipes)
+                this.ustensilListInput(this.recipeList)
                 
             }
             //User clean the input
@@ -86,9 +83,7 @@ class Controller {
                     this.vue.clearDom('.results')
                     this.recipeList.map( recipe => this.vue.RecipiesList(recipe))
                 }
-                
                 if (this.tagUstensil.length !== 0) {
-                    ///arrete ici
                     this.tagUstensil.forEach( tag => {
                         this.recipeList = this.model.getSomeUstensilByNewRecipies(tag, this.recipeList)
                     })
@@ -114,9 +109,7 @@ class Controller {
             let newRecipes = []
             this.ingredientList.length === 0 ? newRecipes = this.model.getListIngredient(e.target.value) : newRecipes = this.model.getShortlistByList(e.target.value, this.ingredientList);
             this.vue.clearDom('#filterByIngredients')
-            for (let i in newRecipes) {
-                this.vue.tagIngredients(newRecipes[i], i, newRecipes.length)
-            }
+            newRecipes.map( (item, index) => this.vue.tagIngredients(item, index, newRecipes.length))
         })
     }
 
@@ -127,9 +120,7 @@ class Controller {
             let newRecipes = []
             this.applianceList.length === 0 ? newRecipes = this.model.getListAppliance(e.target.value) : newRecipes = this.model.getShortlistByList(e.target.value, this.applianceList);
             this.vue.clearDom('#filterByDevice')
-            for (let i in newRecipes) {
-                this.vue.tagAppliance(newRecipes[i], i, newRecipes.length)
-            }
+            newRecipes.map( (item, index) => this.vue.tagAppliance(item, index, newRecipes.length))
         })
     }
 
@@ -141,24 +132,19 @@ class Controller {
             let newRecipes = []
             this.ustensilList.length === 0 ? newRecipes = this.model.getListUstensil(e.target.value) : newRecipes = this.model.getShortlistByList(e.target.value, this.ustensilList);
             this.vue.clearDom('#filterByUtensil')
-            for (let i in newRecipes) {
-                this.vue.tagUstensils(newRecipes[i], i, newRecipes.length)
-            }}
-        })
+            newRecipes.map( (item, index) => this.vue.tagUstensils(item, index, newRecipes.length))
+        }})
     }
 
-    //Affichage de la barre suivant le nombre de resultat
+    //Display search bar according to the number of items
     focusIngredientWidth(){
         const searchBar = document.getElementById('searchIngredient')
         const selectList = document.getElementById('filterByIngredients')
-        
         searchBar.addEventListener('focus', (e) => {
-            selectList.classList.add("show");
             let width = selectList.offsetWidth;
             searchBar.style.width = width + 'px'
         })
         searchBar.addEventListener('blur', (e) => {
-            selectList.classList.remove('show')
             searchBar.style.width = '200px'
         })
     }
@@ -167,7 +153,6 @@ class Controller {
         const selectList = document.getElementById('filterByUtensil')
         searchBar.addEventListener('focus', (e) => {
             let width = selectList.offsetWidth;
-            console.log(width)
             searchBar.style.width = width + 'px'
         })
         searchBar.addEventListener('blur', (e) => {
@@ -215,58 +200,53 @@ class Controller {
     //     })
     // }
 
+
+    //Diplay select bar
     ingredientListInput(newRecipes) {
         let nameList = this.model.getListIngredientByNewRecipies(newRecipes)
         this.ingredientList = nameList
-        //on supprime les tags deja present
+        //Delete tag of the list
         if (this.tag.length !== 0) {
             this.tag.forEach( tag => {
                 nameList = nameList.filter(item => tag.toLowerCase()!==item.toLowerCase())
             })}
         this.vue.clearDom('#filterByIngredients')
-        for (let i in nameList) {
-            this.vue.tagIngredients(nameList[i], i, nameList.length)
-        }
+        nameList.map( (item, index) => this.vue.tagIngredients(item, index, nameList.length))
     }
 
     applianceListInput(newRecipes) {
         let nameList = this.model.getListApplianceByNewRecipies(newRecipes)
         this.applianceList = nameList
         this.vue.clearDom('#filterByDevice')
-        for (let i in nameList) {
-            this.vue.tagAppliance(nameList[i], i, nameList.length)
-        }
+        nameList.map( (item, index) => this.vue.tagAppliance(item, index, nameList.length))
     }
 
     ustensilListInput(newRecipes) {
         let nameList = this.model.getListUstensilByNewRecipies(newRecipes)
         this.ustensilList = nameList
-        //on supprime les tags deja present
+        //Delete tag of the list 
         if (this.tagUstensil.length !== 0) {
             this.tagUstensil.forEach( tag => {
                     nameList = nameList.filter(item => tag.toLowerCase()!==item.toLowerCase())
                 })
         }
         this.vue.clearDom('#filterByUtensil')
-        for (let i in nameList) {
-            this.vue.tagUstensils(nameList[i], i, nameList.length)
-        }
+        nameList.map( (item, index) => this.vue.tagUstensils(item, index, nameList.length))
     }
 
+    //display select bar according to a new list
     ingredientListInputShort(e, newRecipes) {
-        //on recupere la liste d'ingredient
+        //Get items list
         let recipe = this.model.getSomeIngredientByNewRecipies(e, newRecipes)
         let ingredients = this.model.getListIngredientByNewRecipies(recipe)
         this.ingredientList = ingredients
-        //on supprime les tags deja present
+        //Delete tag of the list 
         if (this.tag.length !== 0) {
             this.tag.forEach( tag => {
                 ingredients = ingredients.filter(item => tag.toLowerCase()!==item.toLowerCase())
             })}
         this.vue.clearDom('#filterByIngredients')
-        for (let i in ingredients) {
-            this.vue.tagIngredients(ingredients[i], i, ingredients.length)
-        }
+        ingredients.map( (item, index) => this.vue.tagIngredients(item, index, ingredients.length))
     }
 
     applianceListWhithoutTag(){
@@ -274,21 +254,18 @@ class Controller {
     }
 
     ustensilListWhithoutTag(e, newRecipes){
-        //on recupere la liste d'ingredient
+        //Get items list
         let recipe = this.model.getSomeUstensilByNewRecipies(e, newRecipes)
         let ustensils = this.model.getListUstensilByNewRecipies(recipe)
         this.ustensilList = ustensils
-        //on supprime les tags deja present
-
+        //Delete tag of the list 
         if (this.tagUstensil.length !== 0) {
             this.tagUstensil.forEach( tag => {
                     ustensils = ustensils.filter(item => tag.toLowerCase()!==item.toLowerCase())
                 })
         }
         this.vue.clearDom('#filterByUtensil')
-        for (let i in ustensils) {
-            this.vue.tagUstensils(ustensils[i], i, ustensils.length)
-        }
+        ustensils.map( (item, index) => this.vue.tagUstensils(item, index, ustensils.length))
     }
 
 
@@ -337,14 +314,13 @@ class Controller {
                 this.vue.clearDom('.results')
                 applianceList.map( appliance => this.vue.RecipiesList(appliance))
             }
-            // On ajoute lévènement fermer au tag
+            //Add close function to the tag
             this.deleteTagButton()
-            // On met à jour la liste des ingredients
+            //Update ingredient list
             this.ingredientListInput(this.recipeList)
-            // On met à jour la liste des machines ATTENTION IL FAUT ENLEVER CELUI CLIQUééééé
-            // this.applianceListInput(this.recipeList)
+            //Update appliance list
             this.applianceListWhithoutTag()
-            //List of ustensil update ATTENTION IL FAUT ENLEVER CELUI CLIQUééééé
+            //Update ustensil list
             this.ustensilListInput(this.recipeList)
             
         });
@@ -354,26 +330,25 @@ class Controller {
         const filter = document.getElementById('filterByUtensil')
         filter.addEventListener("click", e => {
             if (e.target && e.target.matches("button")) {
-                //on enregistre la selection
+                //Save ustensil
                 this.tagUstensil.push(e.target.innerHTML)
-                //on efface la barre de recherche
+                //clear input
                 document.getElementById('searchUstensil').value = ''
-                //on positionne le tag
+                //Put ingredient tag in DOM
                 this.vue.tagDOM(e.target.innerHTML, "red")
-                //on récupère la liste des recipes correspondante au tag dans les recipes restantes changer pour appliance
+                //Reload recipes list with the new tag
                 let ustensilList = this.model.getSomeUstensilByNewRecipies(e.target.innerHTML, this.recipeList)
                 this.recipeList = ustensilList
                 this.vue.clearDom('.results')
                 ustensilList.map( ustensil => this.vue.RecipiesList(ustensil))
             }
-            // On ajoute lévènement fermer au tag
+            //Add close function to the tag
             this.deleteTagButton()
-            // On met à jour la liste des ingredients
+            //Update ingredient list
             this.ingredientListInput(this.recipeList)
-            // On met à jour la liste des machines
+            //Update appliance list
             this.applianceListInput(this.recipeList)
-            //List of ustensil update ATTENTION IL FAUT ENLEVER CELUI CLIQUééééé et changer le INNER HTML
-            // this.ustensilListInput(this.recipeList)
+            //Update ustensil list
             this.ustensilListWhithoutTag(e.target.innerHTML, this.recipeList)
             
         });
@@ -381,7 +356,6 @@ class Controller {
 
     deleteTagButton() {
         const tags = document.querySelectorAll(".closeButton")
-        //ne marche pas pour 2 tags, il faut renvoyer par a la searchbar mais a autre chose
         tags.forEach( tag => {
             tag.addEventListener('click', e => {
                 //delete tag from the array
@@ -391,16 +365,15 @@ class Controller {
 
                 tag.parentElement.remove();
 
-                //On cherche les recipes à partir de la barre de recherche
+                //Update recipe list according to search bar
                 const searchBar = document.getElementById('search').value;
                 if (searchBar.length > 2) {
-                    //Recipes update
                     this.recipeList = this.model.getRecipies(searchBar)
                 } else {
                     this.recipeList = this.model.getAllRecipes()
                 }
 
-                //on récupère la liste des recipes correspondante au tag ingredient dans les recipes restantes
+                //Update recipe list according to tag ingredient
                 if (this.tag.length !== 0) {
                     let ingredientList = []
                     this.tag.forEach( tag => {
@@ -410,7 +383,7 @@ class Controller {
                     this.recipeList = [...new Set(ingredientList)]
                 }
 
-                //on récupère la liste des recipes correspondante au tag appliance dans les recipes restantes
+                //Update recipe list according to tag appliance
                 if (this.tagAppliance.length !== 0) {
                     let applianceList = []
                     this.tagAppliance.forEach( tag => {
@@ -420,7 +393,7 @@ class Controller {
                     this.recipeList = [...new Set(applianceList)]
                 }
 
-                //on récupère la liste des recipes correspondante au tag ustensil dans les recipes restantes
+                //Update recipe list according to tag ustensil
                 if (this.tagUstensil.length !== 0) {
                     let ustensilList = []
                     this.tagUstensil.forEach( tag => {
@@ -431,15 +404,14 @@ class Controller {
                 }
 
 
-                //On edite la barre de selection ingredient
+                //Update ingredient list
                 let nameList = this.model.getListIngredientByNewRecipies(this.recipeList)
-                //On edite la barre de selection appliance
+                //Update appliance list
                 let applianceList = this.model.getListApplianceByNewRecipies(this.recipeList)
-                //On edite la barre de selection appliance
+                //Update ustensil list
                 let ustensilList = this.model.getListUstensilByNewRecipies(this.recipeList)
                 
-                // METTRE A JOUR LE SELECT
-                //on supprime les tags deja present il faut la liste d'ingredient pas recipie
+                //Update and display ingredient list
                 let selectIngredients = nameList
                 if (this.tag.length !== 0) {
                     this.tag.forEach( tag => {
@@ -447,11 +419,9 @@ class Controller {
                     })
                 }
                 this.vue.clearDom('#filterByIngredients')
-                for (let i in selectIngredients) {
-                    this.vue.tagIngredients(selectIngredients[i], i, selectIngredients.length)
-                }
+                selectIngredients.map( (item, index) => this.vue.tagIngredients(item, index, selectIngredients.length))
 
-                //on supprime les tags deja present il faut la liste d'appliance pas recipie
+                //Update and display appliance list
                 let selectAppliances = applianceList
                 if (this.tagAppliance.length !== 0) {
                     this.tagAppliance.forEach( tag => {
@@ -459,11 +429,9 @@ class Controller {
                     })
                 }
                 this.vue.clearDom('#filterByDevice')
-                for (let i in selectAppliances) {
-                    this.vue.tagAppliance(selectAppliances[i], i, selectAppliances.length)
-                }
+                selectAppliances.map( (item, index) => this.vue.tagAppliance(item, index, selectAppliances.length))
 
-                //on supprime les tags deja present il faut la liste d'ustensil pas recipie
+                //Update and display ustensil list
                 let selectUstensil = ustensilList
                 if (this.tagUstensil.length !== 0) {
                     this.tagUstensil.forEach( tag => {
@@ -471,11 +439,9 @@ class Controller {
                     })
                 }
                 this.vue.clearDom('#filterByUtensil')
-                for (let i in selectUstensil) {
-                    this.vue.tagUstensils(selectUstensil[i], i, selectUstensil.length)
-                }
+                selectUstensil.map( (item, index) => this.vue.tagUstensils(item, index, selectUstensil.length))
 
-                //On edite le DOM
+                //Update DOM recipe
                 if (this.recipeList.length === 0) {
                     return this.vue.noRecipe()
                 } else {

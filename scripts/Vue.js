@@ -6,51 +6,50 @@ class Vue {
 
     tagIngredients(ingredient, index, total){
         ingredient = ingredient.charAt(0).toUpperCase() + ingredient.slice(1)
-        console.log(ingredient)
         const select = document.getElementById("filterByIngredients");
-        //Affichage en colonne initialisation
-        // if(parseInt(index)===0){
-        //     select.style.columnCount="1"
-        // }
-        //Ajout de l'ingredient dans la liste de selection
-        const newOptions = document.createElement('li')
-        newOptions.innerHTML = `<button class="selector__li">${ingredient}</button>`
-        select.appendChild(newOptions)
-        //Affichage en colonne pour grand nombre
-        // if(total>50){
-        //     if(parseInt(index)%30===0 && parseInt(index)!==0){
-        //         select.style.columnCount++
-        //         select.style.fontSize = '13px'
-        //     }
-        // } else {
-        // //Affichage en colonne pour petit nombre
-        //     if(parseInt(index)%15===0 && parseInt(index)!==0){
-        //         select.style.columnCount++
-        //         select.style.fontSize = '17px'
-        //     }
-        // }
-        return select;
-    }
-
-    tagAppliance(appliance, index, total){
-        const select = document.getElementById("filterByDevice");
-        appliance = appliance.charAt(0).toUpperCase() + appliance.slice(1)
-        //Affichage en colonne initialisation
+        //display column init
         if(parseInt(index)===0){
             select.style.columnCount="1"
         }
-        //Ajout de l'ingredient dans la liste de selection
+        //Add item li
         const newOptions = document.createElement('li')
-        newOptions.innerHTML = `<button class="selector__li">${appliance}</button>`
+        newOptions.innerHTML = `<button class="selector__li">${ingredient}</button>`
         select.appendChild(newOptions)
-        //Affichage en colonne pour grand nombre
+        //display column for a high number
         if(total>50){
             if(parseInt(index)%30===0 && parseInt(index)!==0){
                 select.style.columnCount++
                 select.style.fontSize = '13px'
             }
         } else {
-        //Affichage en colonne pour petit nombre
+        //display column for a low number
+            if(parseInt(index)%15===0 && parseInt(index)!==0){
+                select.style.columnCount++
+                select.style.fontSize = '17px'
+            }
+        }
+        return select;
+    }
+
+    tagAppliance(appliance, index, total){
+        const select = document.getElementById("filterByDevice");
+        appliance = appliance.charAt(0).toUpperCase() + appliance.slice(1)
+        //display column init
+        if(parseInt(index)===0){
+            select.style.columnCount="1"
+        }
+        //Add item li
+        const newOptions = document.createElement('li')
+        newOptions.innerHTML = `<button class="selector__li">${appliance}</button>`
+        select.appendChild(newOptions)
+        //display column for a high number
+        if(total>50){
+            if(parseInt(index)%30===0 && parseInt(index)!==0){
+                select.style.columnCount++
+                select.style.fontSize = '13px'
+            }
+        } else {
+        //display column for a low number
             if(parseInt(index)%10===0 && parseInt(index)!==0){
                 select.style.columnCount++
                 select.style.fontSize = '17px'
@@ -62,22 +61,22 @@ class Vue {
     tagUstensils(ustensil, index, total){
         const select = document.getElementById("filterByUtensil");
         ustensil = ustensil.charAt(0).toUpperCase() + ustensil.slice(1)
-        //Affichage en colonne initialisation
+        //display column init
         if(parseInt(index)===0){
             select.style.columnCount="1"
         }
-        //Ajout de l'ingredient dans la liste de selection
+        //Add item li
         const newOptions = document.createElement('li')
         newOptions.innerHTML = `<button class="selector__li">${ustensil}</button>`
         select.appendChild(newOptions)
-        //Affichage en colonne pour grand nombre
+        //display column for a high number
         if(total>50){
             if(parseInt(index)%30===0 && parseInt(index)!==0){
                 select.style.columnCount++
                 select.style.fontSize = '13px'
             }
         } else {
-        //Affichage en colonne pour petit nombre
+        //display column for a low number
             if(parseInt(index)%10===0 && parseInt(index)!==0){
                 select.style.columnCount++
                 select.style.fontSize = '17px'
