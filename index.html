@@ -40,15 +40,17 @@
             <div class="tagName selector--blue">Coco <button class="closeButton" aria-label="Supprimer le tag"><i class="fas fa-times-circle"></i></button></div> -->
         </section>
 
-        <section class="filter flex-row d-flex ">
+        
+
+        <section class="filter  ">
+            <div class="flex-row d-flex">
             <h2 hidden>Filtrer</h2>
             <div class="position-relative widthSelect">
                 <label for="filterByIngredient" class="form-label hidden text-white">Ingrédients</label>
                 <input id="searchIngredient" type="text"
                     class="selector form-select form-control selector--blue searchBy"
                     placeholder="Ingrédients">
-                <ul id="filterByIngredients" class="liste selector--blue" aria-label="filterByIngredient">
-                </ul>
+
                 <!-- <select id="filterByIngredient" class="form-select selector selector--blue" aria-label="filterByIngredient">
                 <option selected>Ingrédients</option>
                 <option value="1">One</option>
@@ -74,8 +76,12 @@
                 <ul id="filterByUtensil" class="liste selector--red" aria-label="filterByUtensil">
                 </ul>
             </div>
+            </div>
 
+            <ul id="filterByIngredients" class="liste selector--blue" aria-label="filterByIngredient">
+            </ul>
 
+            
             <!-- <label for="filterByUtensil" class="form-label hidden">Filter par ustensil</label>
             <select class="form-select selector selector--red" id="filterByUtensil" aria-label="filterByUtensil">
                 <option selected>Ustensiles</option>

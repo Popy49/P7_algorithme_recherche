@@ -25,13 +25,14 @@
 .liste {
     display: none;
     font-size: 13px;
-    position: absolute;
-    top: 75px;
+    // position: absolute;
+    // top: 75px;
     z-index: 10;
-    column-count: 1;
-    -moz-column-count: 1;
-    -webkit-column-count:1;
-    column-gap: 0;
+    margin-top: -22px;
+    // column-count: 1;
+    // -moz-column-count: 1;
+    // -webkit-column-count:1;
+    // column-gap: 0;
   }
   
   #searchIngredient{
@@ -39,10 +40,34 @@
       width: 500px;
       background-color: $first-color;
       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='white'  stroke-linecap='round' stroke-linejoin='round' transform='rotate(180)' transform-origin='center' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e  " );
-      ~#filterByIngredients {
-        display: block;
+      ~ .lala {
+        background-color: red;
+        >#filterByIngredients {
+          // display: grid;
+          // grid-gap: 0.1rem;
+          display: flex;
+          flex-direction: column;
+          max-height: 500px;
+          flex-flow: column wrap;
+          >li{
+            background-color: $first-color;
+          }
+          >li:last-child{
+            background-color: red;
+            height: 100%;
+          }
+        }
+
       }
   }}
+
+  .show{
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    flex-flow: column wrap;
+  }
+
 
   #searchDevice{
     &:focus {
@@ -74,7 +99,31 @@
 
   
   #filterByIngredients:hover{
-    display: inline-block;
+    // display: inline-block;
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    flex-flow: column wrap;
+    // display: flex
+  }
+
+  #filterByIngredients{
+    // li:nth-child(15){
+    //   grid-column-start: 2;
+    // }
+    // li:nth-child(30){
+    //   grid-column-start: 3;
+    // }
+    // li:nth-child(45){
+    //   grid-column-start: 4;
+    //   >button{color: aqua;}
+    // }
+    // li:nth-child(60){
+    //   grid-column-start: 4;
+    // }
+    // li:nth-child(75){
+    //   grid-column-start: 5;
+    // }
   }
   
   .selector__li{

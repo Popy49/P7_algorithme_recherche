@@ -151,11 +151,14 @@ class Controller {
     focusIngredientWidth(){
         const searchBar = document.getElementById('searchIngredient')
         const selectList = document.getElementById('filterByIngredients')
+        
         searchBar.addEventListener('focus', (e) => {
+            selectList.classList.add("show");
             let width = selectList.offsetWidth;
             searchBar.style.width = width + 'px'
         })
         searchBar.addEventListener('blur', (e) => {
+            selectList.classList.remove('show')
             searchBar.style.width = '200px'
         })
     }
@@ -215,7 +218,11 @@ class Controller {
     ingredientListInput(newRecipes) {
         let nameList = this.model.getListIngredientByNewRecipies(newRecipes)
         this.ingredientList = nameList
-        console.log(this.ingredientList)
+        //on supprime les tags deja present
+        if (this.tag.length !== 0) {
+            this.tag.forEach( tag => {
+                nameList = nameList.filter(item => tag.toLowerCase()!==item.toLowerCase())
+            })}
         this.vue.clearDom('#filterByIngredients')
         for (let i in nameList) {
             this.vue.tagIngredients(nameList[i], i, nameList.length)
@@ -234,6 +241,12 @@ class Controller {
     ustensilListInput(newRecipes) {
         let nameList = this.model.getListUstensilByNewRecipies(newRecipes)
         this.ustensilList = nameList
+        //on supprime les tags deja present
+        if (this.tagUstensil.length !== 0) {
+            this.tagUstensil.forEach( tag => {
+                    nameList = nameList.filter(item => tag.toLowerCase()!==item.toLowerCase())
+                })
+        }
         this.vue.clearDom('#filterByUtensil')
         for (let i in nameList) {
             this.vue.tagUstensils(nameList[i], i, nameList.length)
@@ -432,12 +445,6 @@ class Controller {
                     this.tag.forEach( tag => {
                         selectIngredients = selectIngredients.filter(item => tag.toLowerCase()!==item.toLowerCase())
                     })
-                    // for (const tag of this.tag) {
-                    //     let myIndex = selectIngredients.indexOf(tag.toLowerCase());
-                    //     if (myIndex !== -1) {
-                    //         selectIngredients.splice(myIndex, 1);
-                    //     }
-                    // }
                 }
                 this.vue.clearDom('#filterByIngredients')
                 for (let i in selectIngredients) {
@@ -447,12 +454,9 @@ class Controller {
                 //on supprime les tags deja present il faut la liste d'appliance pas recipie
                 let selectAppliances = applianceList
                 if (this.tagAppliance.length !== 0) {
-                    for (const tag of this.tagAppliance) {
-                        let myIndex = selectAppliances.indexOf(tag);
-                        if (myIndex !== -1) {
-                            selectAppliances.splice(myIndex, 1);
-                        }
-                    }
+                    this.tagAppliance.forEach( tag => {
+                        selectAppliances = selectAppliances.filter(item => tag.toLowerCase()!==item.toLowerCase())
+                    })
                 }
                 this.vue.clearDom('#filterByDevice')
                 for (let i in selectAppliances) {
@@ -462,160 +466,26 @@ class Controller {
                 //on supprime les tags deja present il faut la liste d'ustensil pas recipie
                 let selectUstensil = ustensilList
                 if (this.tagUstensil.length !== 0) {
-                    for (const tag of this.tagUstensil) {
-                        let myIndex = selectUstensil.indexOf(tag.toLowerCase());
-                        if (myIndex !== -1) {
-                            selectUstensil.splice(myIndex, 1);
-                        }
-                    }
+                    this.tagUstensil.forEach( tag => {
+                        selectUstensil = selectUstensil.filter(item => tag.toLowerCase()!==item.toLowerCase())
+                    })
                 }
                 this.vue.clearDom('#filterByUtensil')
                 for (let i in selectUstensil) {
                     this.vue.tagUstensils(selectUstensil[i], i, selectUstensil.length)
                 }
 
-
                 //On edite le DOM
                 if (this.recipeList.length === 0) {
                     return this.vue.noRecipe()
                 } else {
                     this.vue.clearDom('.results')
-                    for (let i in this.recipeList) {
-                        this.vue.RecipiesList((this.recipeList[i]))
-                    }
+                    this.recipeList.map( recipe => this.vue.RecipiesList(recipe))
                 }
                 this.searchInput()
             })
 
         })
-        // for (const tag of tags) {
-        //     tag.addEventListener('click', e => {
-        //         //delete tag from the array ingredient
-        //         const ingredientTag = this.tag.indexOf(e.target.dataset.label);
-        //         if (ingredientTag !== -1) {
-        //             this.tag.splice(ingredientTag , 1);
-        //         }
-        //         //delete tag from the array appliance
-        //         const applianceTag = this.tagAppliance.indexOf(e.target.dataset.label);
-        //         if (applianceTag !== -1) {
-        //             this.tagAppliance.splice(applianceTag, 1);
-        //         }
-        //         //delete tag from the array ustensil
-        //          const ustensilTag = this.tagUstensil.indexOf(e.target.dataset.label);
-        //          if (ustensilTag !== -1) {
-        //              this.tagUstensil.splice(ustensilTag, 1);
-        //          }
-
-        //         tag.parentElement.remove();
-
-        //         //On cherche les recipes à partir de la barre de recherche
-        //         const searchBar = document.getElementById('search').value;
-        //         if (searchBar.length > 2) {
-        //             //Recipes update
-        //             this.recipeList = this.model.getRecipies(searchBar)
-        //         } else {
-        //             this.recipeList = this.model.getAllRecipes()
-        //         }
-
-        //         //on récupère la liste des recipes correspondante au tag ingredient dans les recipes restantes
-        //         //liste select pas bonne
-        //         if (this.tag.length !== 0) {
-        //             let ingredientList = []
-        //             for (const tag of this.tag) {
-        //                 ingredientList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
-        //                 this.recipeList = this.model.getSomeIngredientByNewRecipies(tag, this.recipeList)
-        //             }
-        //             this.recipeList = [...new Set(ingredientList)]
-        //         }
-
-        //         //on récupère la liste des recipes correspondante au tag appliance dans les recipes restantes
-        //         if (this.tagAppliance.length !== 0) {
-        //             let applianceList = []
-        //             for (const tag of this.tagAppliance) {
-        //                 applianceList = this.model.getSomeApplianceByNewRecipies(tag, this.recipeList)
-        //                 this.recipeList = this.model.getSomeApplianceByNewRecipies(tag, this.recipeList)
-        //             }
-        //             this.recipeList = [...new Set(applianceList)]
-        //         }
-
-        //         //on récupère la liste des recipes correspondante au tag ustensil dans les recipes restantes
-        //         //ATTENTION NE MARCHE PASSSS
-        //         if (this.tagUstensil.length !== 0) {
-        //             let ustensilList = []
-        //             for (const tag of this.tagUstensil) {
-        //                 ustensilList = this.model.getSomeUstensilByNewRecipies(tag, this.recipeList)
-        //                 this.recipeList = this.model.getSomeUstensilByNewRecipies(tag, this.recipeList)
-        //             }
-        //             this.recipeList = [...new Set(ustensilList)]
-        //         }
-
-
-        //         //On edite la barre de selection ingredient
-        //         let nameList = this.model.getListIngredientByNewRecipies(this.recipeList)
-        //         //On edite la barre de selection appliance
-        //         let applianceList = this.model.getListApplianceByNewRecipies(this.recipeList)
-        //         //On edite la barre de selection appliance
-        //         let ustensilList = this.model.getListUstensilByNewRecipies(this.recipeList)
-                
-        //         // METTRE A JOUR LE SELECT
-        //         //on supprime les tags deja present il faut la liste d'ingredient pas recipie
-        //         let selectIngredients = nameList
-        //         if (this.tag.length !== 0) {
-        //             for (const tag of this.tag) {
-        //                 let myIndex = selectIngredients.indexOf(tag);
-        //                 if (myIndex !== -1) {
-        //                     selectIngredients.splice(myIndex, 1);
-        //                 }
-        //             }
-        //         }
-        //         this.vue.clearDom('#filterByIngredients')
-        //         for (let i in selectIngredients) {
-        //             this.vue.tagIngredients(selectIngredients[i], i, selectIngredients.length)
-        //         }
-
-        //         //on supprime les tags deja present il faut la liste d'appliance pas recipie
-        //         let selectAppliances = applianceList
-        //         if (this.tagAppliance.length !== 0) {
-        //             for (const tag of this.tagAppliance) {
-        //                 let myIndex = selectAppliances.indexOf(tag);
-        //                 if (myIndex !== -1) {
-        //                     selectAppliances.splice(myIndex, 1);
-        //                 }
-        //             }
-        //         }
-        //         this.vue.clearDom('#filterByDevice')
-        //         for (let i in selectAppliances) {
-        //             this.vue.tagAppliance(selectAppliances[i], i, selectAppliances.length)
-        //         }
-
-        //         //on supprime les tags deja present il faut la liste d'ustensil pas recipie
-        //         let selectUstensil = ustensilList
-        //         if (this.tagUstensil.length !== 0) {
-        //             for (const tag of this.tagUstensil) {
-        //                 let myIndex = selectUstensil.indexOf(tag);
-        //                 if (myIndex !== -1) {
-        //                     selectUstensil.splice(myIndex, 1);
-        //                 }
-        //             }
-        //         }
-        //         this.vue.clearDom('#filterByUtensil')
-        //         for (let i in selectUstensil) {
-        //             this.vue.tagUstensils(selectUstensil[i], i, selectUstensil.length)
-        //         }
-
-
-        //         //On edite le DOM
-        //         if (this.recipeList.length === 0) {
-        //             return this.vue.noRecipe()
-        //         } else {
-        //             this.vue.clearDom('.results')
-        //             for (let i in this.recipeList) {
-        //                 this.vue.RecipiesList((this.recipeList[i]))
-        //             }
-        //         }
-        //         this.searchInput()
-        //     })
-        // }
     }
     }
 

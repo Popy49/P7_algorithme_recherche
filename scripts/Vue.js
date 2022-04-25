@@ -6,28 +6,29 @@ class Vue {
 
     tagIngredients(ingredient, index, total){
         ingredient = ingredient.charAt(0).toUpperCase() + ingredient.slice(1)
+        console.log(ingredient)
         const select = document.getElementById("filterByIngredients");
         //Affichage en colonne initialisation
-        if(parseInt(index)===0){
-            select.style.columnCount="1"
-        }
+        // if(parseInt(index)===0){
+        //     select.style.columnCount="1"
+        // }
         //Ajout de l'ingredient dans la liste de selection
         const newOptions = document.createElement('li')
         newOptions.innerHTML = `<button class="selector__li">${ingredient}</button>`
         select.appendChild(newOptions)
         //Affichage en colonne pour grand nombre
-        if(total>50){
-            if(parseInt(index)%30===0 && parseInt(index)!==0){
-                select.style.columnCount++
-                select.style.fontSize = '13px'
-            }
-        } else {
-        //Affichage en colonne pour petit nombre
-            if(parseInt(index)%15===0 && parseInt(index)!==0){
-                select.style.columnCount++
-                select.style.fontSize = '17px'
-            }
-        }
+        // if(total>50){
+        //     if(parseInt(index)%30===0 && parseInt(index)!==0){
+        //         select.style.columnCount++
+        //         select.style.fontSize = '13px'
+        //     }
+        // } else {
+        // //Affichage en colonne pour petit nombre
+        //     if(parseInt(index)%15===0 && parseInt(index)!==0){
+        //         select.style.columnCount++
+        //         select.style.fontSize = '17px'
+        //     }
+        // }
         return select;
     }
 
