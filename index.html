@@ -35,8 +35,7 @@
         </section>
 
         <section id="tag">
-            <!-- <div class="tagName selector--blue">Coco <button class="closeButton" aria-label="Supprimer le tag"><i class="fas fa-times-circle"></i></button></div>
-            <div class="tagName selector--blue">Coco <button class="closeButton" aria-label="Supprimer le tag"><i class="fas fa-times-circle"></i></button></div> -->
+            <h2 hidden>Liste des tags actifs</h2>
         </section>
 
         
@@ -45,7 +44,7 @@
             <div class="flex-row d-flex">
             <h2 hidden>Filtrer</h2>
             <div class="position-relative widthSelect">
-                <label for="filterByIngredient" class="form-label hidden text-white">Ingrédients</label>
+                <label for="searchIngredient" class="form-label hidden text-white">Ingrédients</label>
                 <input id="searchIngredient" type="text"
                     class="selector form-select form-control selector--blue searchBy"
                     placeholder="Ingrédients">
@@ -54,7 +53,7 @@
             </div>
 
             <div class="position-relative widthSelect">
-            <label for="filterByDevice" class="form-label hidden">Appareils</label>
+            <label for="searchDevice" class="form-label hidden">Appareils</label>
             <input id="searchDevice" type="text"
                     class="selector form-select form-control selector--green searchBy"
                     placeholder="Appareils">
@@ -63,7 +62,7 @@
             </div>
 
             <div class="position-relative widthSelect">
-            <label for="filterByUtensil" class="form-label hidden">Ustensiles</label>
+            <label for="searchUstensil" class="form-label hidden">Ustensiles</label>
             <input id="searchUstensil" type="text"
                     class="selector form-select form-control selector--red searchBy"
                     placeholder="Ustensiles">
@@ -71,52 +70,20 @@
                 </ul>
             </div>
             </div>
-
-
-
-            
-            <!-- <label for="filterByUtensil" class="form-label hidden">Filter par ustensil</label>
-            <select class="form-select selector selector--red" id="filterByUtensil" aria-label="filterByUtensil">
-                <option selected>Ustensiles</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select> -->
         </section>
 
         <section id="results" class="results ">
-            <!-- d-flex flex-wrap justify-content-between -->
             <h3 hidden>Résultats</h3>
-            <!-- <article class="card w-30">
-                <img src="" class="card-img-top" alt="photo presentation">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h4 class="card-title">Limonade de Coco</h4>
-                        <p class="card-text"><i class="far fa-clock" aria-hidden="true"></i><strong> 10 min</strong></p>
-                    </div>
-                    <div class="d-flex flex-row justify-content-between legend">
-                        <ul>
-                            <li><strong>lait de coco:</strong> 400ml</li>
-                            <li><strong>jus de citron:</strong> 2</li>
-                            <li><strong>lait de coco:</strong> 400ml</li>
-                            <li><strong>lait de coco:</strong> 400ml</li>
-                        </ul>
-                        <p class="card-text w-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus soluta modi voluptatem deleni</p>
-                    </div>
-
-                </div>
-            </article> -->
-
         </section>
     </main>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <!-- Models -->
+<!-- 
     <script type='module' src="scripts/Model.js"></script>
-    <!-- Controller -->
-    <script type='module' src="scripts/Controller.js"></script>
+
+    <script type='module' src="scripts/Controller.js"></script>  -->
     <!-- index -->
     <script type='module' src="scripts/index.js"></script>
 </body>
