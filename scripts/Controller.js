@@ -47,11 +47,18 @@ class Controller {
     //User search input in general search bar //Attention si tag et qu'on recherche, NE MARCHE PAS
     searchInput() {
         const searchBar = document.getElementById('search')
-        searchBar.addEventListener('input', (e) => {
+        const searchForm = document.getElementById('searchForm')
+
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+            console.log(this.recipeList)
             //3 cars in general input    
-            if (e.target.value.length > 2) {
+            if (searchBar.value.length > 2) {
                 //Check if there is tag
-                this.recipeList.length === 0 ? this.recipeList = this.model.getRecipies(e.target.value) : this.recipeList = this.model.getShortRecipies(e.target.value, this.recipeList);
+                if(this.tagAppliance.length === 0 && this.tag.length === 0 && this.tagUstensil.length === 0){
+                    this.init()
+                }
+                this.recipeList === this.model.getAllRecipes() ? this.recipeList = this.model.getRecipies(searchBar.value) : this.recipeList = this.model.getShortRecipies(searchBar.value, this.recipeList);
                 //Recipes update
                 if (this.recipeList.length === 0) {
                     return this.vue.noRecipe()
@@ -68,7 +75,7 @@ class Controller {
                 
             }
             //User clean the input
-            if (e.target.value.length === 0) {
+            if (searchBar.value.length === 0) {
                 this.vue.clearDom('.results')
                 this.recipeList = this.model.getAllRecipes()
                 //No tag
@@ -140,31 +147,45 @@ class Controller {
     focusIngredientWidth(){
         const searchBar = document.getElementById('searchIngredient')
         const selectList = document.getElementById('filterByIngredients')
-        searchBar.addEventListener('focus', (e) => {
-            let width = selectList.offsetWidth;
-            searchBar.style.width = width + 'px'
-        })
         searchBar.addEventListener('blur', (e) => {
             searchBar.style.width = '200px'
         })
+        searchBar.addEventListener('focus', (e) => {
+            if(selectList.childElementCount < 10 ){
+                selectList.classList.add('w-200')
+            } else {
+                selectList.classList.remove('w-200')
+                searchBar.style.width = selectList.offsetWidth + 'px'
+            }
+        })
+
     }
     focusUstensilWidth(){
         const searchBar = document.getElementById('searchUstensil')
         const selectList = document.getElementById('filterByUtensil')
-        searchBar.addEventListener('focus', (e) => {
-            let width = selectList.offsetWidth;
-            searchBar.style.width = width + 'px'
-        })
         searchBar.addEventListener('blur', (e) => {
             searchBar.style.width = '200px'
         })
+        searchBar.addEventListener('focus', (e) => {
+            if(selectList.childElementCount < 10 ){
+                selectList.classList.add('w-200')
+            } else {
+                selectList.classList.remove('w-200')
+                searchBar.style.width = selectList.offsetWidth + 'px'
+            }
+        })
+        
     }
     focusApplianceWidth(){
         const searchBar = document.getElementById('searchDevice')
         const selectList = document.getElementById('filterByDevice')
         searchBar.addEventListener('focus', (e) => {
-            let width = selectList.offsetWidth;
-            searchBar.style.width = width + 'px'
+            if(selectList.childElementCount < 10 ){
+                selectList.classList.add('w-200')
+            } else {
+                selectList.classList.remove('w-200')
+                searchBar.style.width = selectList.offsetWidth + 'px'
+            }
         })
         searchBar.addEventListener('blur', (e) => {
             searchBar.style.width = '200px'

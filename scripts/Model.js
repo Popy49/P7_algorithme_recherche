@@ -56,10 +56,10 @@ class Model {
     getRecipies(e){
         const newRecipe = []
         recipes.forEach( (recipe) => {
-            let description = recipe.description.includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
-            let name = recipe.name.includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            let description = recipe.description.toLowerCase().includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            let name = recipe.name.toLowerCase().includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
             let ingredient = recipe.ingredients.forEach( (ingredient) => {
-                ingredient.ingredient.includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+                ingredient.ingredient.toLowerCase().includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
             });
             description || name || ingredient ? newRecipe.push(recipe) : newRecipe;
         })
@@ -74,10 +74,10 @@ class Model {
     getShortRecipies(e, array){
         const newRecipe = []
         array.forEach( (recipe) => {
-            let description = recipe.description.includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
-            let name = recipe.name.includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            let description = recipe.description.toLowerCase().includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            let name = recipe.name.toLowerCase().includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
             let ingredient = recipe.ingredients.forEach( (ingredient) => {
-                ingredient.ingredient.includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+                ingredient.ingredient.toLowerCase().includes(e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
             });
             description || name || ingredient ? newRecipe.push(recipe) : newRecipe;
         })

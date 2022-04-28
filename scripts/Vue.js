@@ -90,7 +90,7 @@ class Vue {
         var select = document.getElementById("tag");
         let tag = document.createElement("div");
         tag.className = `tagName selector--${color}`;
-        tag.innerHTML = `<button data-label="${e}" class="closeButton" aria-label="Supprimer le tag"> ${e} <i class="fas fa-times-circle"></i></button>`
+        tag.innerHTML = `<button data-label="${e}" class="closeButton" aria-label="Supprimer le tag"> ${e} <i data-label="${e}" class="fas fa-times-circle"></i></button>`
         select.appendChild(tag)
     }
 

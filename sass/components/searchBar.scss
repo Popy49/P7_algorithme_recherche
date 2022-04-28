@@ -12,5 +12,10 @@
         padding-right: 20px;
         font-size: 25px;
     }
+    &:focus{
+        background-color: rgb(224, 224, 224);
+        border: none;
+        box-shadow: none;
+    }
 }
 
