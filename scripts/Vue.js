@@ -99,16 +99,18 @@ class Vue {
         dom.innerHTML = ''
     }
 
-    clearOption(classe){
-        var select = document.getElementById(classe);
-        select.options.length=1
-
-    }
 
     noRecipe(){
         let dom = document.getElementById('results')
-        dom.innerHTML = `Aucune recette ne correspond à votre critère… vous pouvez
-        chercher « tarte aux pommes », « poisson », etc.` 
+        dom.innerHTML = '';
+        let errorMessage = document.createElement('div')
+        errorMessage.innerHTML = `Aucune recette ne correspond à votre critère… vous pouvez
+        chercher « tarte aux pommes », « poisson », etc.`;
+        errorMessage.className = "large"; 
+        dom.appendChild(errorMessage)
+        
+        
+        
     }
 
     RecipiesList(recipies){

@@ -8,11 +8,11 @@ class Controller {
     constructor(model, vue) {
         this.model = model
         this.vue = vue
+        this.init()
         this.searchInput()
         this.ingredientbutton()
         this.applianceButton()
         this.ustensilButton()
-        this.init()
         this.searchinputIngredient()
         this.searchinputAppliance()
         this.searchinputUstensil()
@@ -22,26 +22,20 @@ class Controller {
     }
 
     init() {
-        this.ingredientList = []
-        this.applianceList = []
-        this.ustensilList = []
         this.recipeList = this.model.getAllRecipes()
+        this.ingredientList = this.model.getAllIngredient()
+        this.applianceList = this.model.getAllAppliance()
+        this.ustensilList = this.model.getAllUstensils()
         this.tag = []
         this.tagAppliance = []
         this.tagUstensil = []
-        let recipes = this.model.getAllRecipes()
-        let nameList = this.model.getAllIngredient()
-        let appliances = this.model.getAllAppliance()
-        let ustensils = this.model.getAllUstensils()
 
         //Display Recipes
         recipes.map(recipe => this.vue.RecipiesList(recipe))
         //Display select lists
-        nameList.map( (item, index) => this.vue.tagIngredients(item, index, nameList.length))
-        appliances.map( (item, index) => this.vue.tagAppliance(item, index, appliances.length))
-        ustensils.map( (item, index) => this.vue.tagUstensils(item, index, ustensils.length))
-
-
+        this.ingredientList.map( (item, index) => this.vue.tagIngredients(item, index, this.ingredientList.length))
+        this.applianceList.map( (item, index) => this.vue.tagAppliance(item, index, this.applianceList.length))
+        this.ustensilList.map( (item, index) => this.vue.tagUstensils(item, index, this.ustensilList.length))
     }
 
     //User search input in general search bar //Attention si tag et qu'on recherche, NE MARCHE PAS

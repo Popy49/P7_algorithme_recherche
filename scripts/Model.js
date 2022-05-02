@@ -68,7 +68,7 @@ class Model {
 
     /**
         @param {string} input 
-        @param {array} recipe
+        @param {object} recipe
         @returns {object} recipe
     */
     getShortRecipies(e, array){

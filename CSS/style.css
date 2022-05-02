@@ -178,6 +178,10 @@ a {
   width: 200px;
 }
 
+.large {
+  grid-column: 1/4;
+}
+
 .card {
   margin-bottom: 20px;
 }
