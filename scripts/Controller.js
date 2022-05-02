@@ -153,6 +153,7 @@ class Controller {
         searchBar.addEventListener('focus', (e) => {
             if(selectList.childElementCount < 10 ){
                 selectList.classList.add('w-200')
+                searchBar.style.width = '200px'
             } else {
                 selectList.classList.remove('w-200')
                 searchBar.style.width = selectList.offsetWidth + 'px'
@@ -167,8 +168,10 @@ class Controller {
             searchBar.style.width = '200px'
         })
         searchBar.addEventListener('focus', (e) => {
+            console.log(selectList.childElementCount)
             if(selectList.childElementCount < 10 ){
                 selectList.classList.add('w-200')
+                searchBar.style.width = '200px'
             } else {
                 selectList.classList.remove('w-200')
                 searchBar.style.width = selectList.offsetWidth + 'px'
@@ -182,6 +185,7 @@ class Controller {
         searchBar.addEventListener('focus', (e) => {
             if(selectList.childElementCount < 10 ){
                 selectList.classList.add('w-200')
+                searchBar.style.width = '200px'
             } else {
                 selectList.classList.remove('w-200')
                 searchBar.style.width = selectList.offsetWidth + 'px'
