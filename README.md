@@ -13,5 +13,5 @@ Developped with Javascript vanilla
 ## 3. Demo and preview
 You can see the demo : https://popy49.github.io/P7_algorithme_recherche/
 
-![Preview](./p7desk.png?raw=true "preview")
+![Preview](./p7.png?raw=true "preview")
 
